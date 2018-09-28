@@ -1,0 +1,2 @@
+#include <winuser.rh>
+1 RT_MANIFEST "heli_part2.auto.manifest"
