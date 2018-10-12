@@ -14,7 +14,7 @@
 %%%%%%%%%%% Calibration of the encoder and the hardware for the specific
 %%%%%%%%%%% helicopter
 Joystick_gain_x = 1;
-Joystick_gain_y = -1;
+Joystick_gain_y = 1;
 
 
 %%%%%%%%%%% Physical constants
@@ -32,26 +32,29 @@ J_e = m_c*l_c^2 + 2*m_p*l_h^2;
 J_lambda = m_c*l_c^2 + 2*m_p*(l_h^2 + l_p^2);
 
 % Kf til elevation
-V_s = 7.187;
+V_s = 6.802;
 K_f = (2*l_h*m_p*g - l_c*m_c*g)/(l_h * V_s);
-
-% Pitch Controller
-K_pp = 10; 
-K_pd = 10;
-
-% Travel Controller
-K_rp = -1;
 
 L1 = l_p*K_f;
 L2 = l_c*m_c*g - 2*l_h*m_p*g;
 L3 = l_h*K_f;
-L4 = l_h*K_f;
+L4 = -l_h*K_f;
 
 K1 = L1/J_p;
 K2 = L3/J_e;
 K3 = -(L4*L2)/(J_lambda*L3);
 
+% Zeta and omega
+zeta = 0.9;
+T_s = 2;
+omega_n = -(log(0.02*sqrt(1-zeta^2)))/(zeta*T_s);
 
+% Pitch Controller
+K_pp = omega_n^2/K1; 
+K_pd = (2*zeta*omega_n)/K1;
+
+% Travel Rate Controller
+K_rp = -2;
 
 %% Part 3: LQR %%
 % State Space equation:: dot(x) = Ax + Bu
@@ -69,24 +72,21 @@ C_lqr = [1 0 0 0 0;
          0 0 1 0 0];
 
 % Weighting matrices
-q1 = 1;
+q1 = 100;
 q2 = 1;
-q3 = 1;
-q4 = 1;
-q5 = 1;
-Q = [q1 0 0 0 0;
-     0 q2 0 0 0;
-     0 0 q3 0 0;
-     0 0 0 q4 0;
-     0 0 0 0 q5];
+q3 = 150;
+q4 = 200;
+q5 = 200;
+Q = diag([q1 q2 q3 q4 q5]);
 
 r1 = 1;
 r2 = 1;
-R = [r1 0;0 r2];
+R = diag([r1 r2]);
 
 % LQR: u = -K*x and P matrix --> u = Pr - K*x
 K = lqr(A_lqr,B_lqr,Q,R);
 
+poles_LQR = eig(A_lqr-B_lqr*K);
 
 %% PART 4: State Estimation
 % State Space equation:: dot(x) = Ax + Bu
@@ -106,8 +106,92 @@ B = [0  0;
 C = [1 0 0 0 0 0;
      0 0 1 0 0 0;
      0 0 0 0 1 0];
- 
-p = [-11 -12 -13 -14 -15 -16];
+
+ratio = 20;
+r_LQR = max(abs(poles_LQR));
+phi = pi/8;
+r_est = r_LQR*ratio;
+spread = -phi:(phi/2.5):phi;
+poles_est = -r_est*exp(1i*spread);
+
+figure(1)
+plot(poles_est, 'x')
+
+
 % You can also use place for estimator gain selection by transposing the A 
 % matrix and substituting C' for B.
-L = place(A', C', p).';
+L = place(A', C', poles_est).';
+
+%% Plotting
+a = load('p4p2_states_QOystein.mat');
+b = load('p4p2_reference_QOystein.mat');
+c = load('p4p2_estimate_QOystein.mat');
+
+figure(3)
+subplot(2, 3, 1);
+plot(a.states(1,:), a.states(2,:),'b'), grid on
+hold on
+plot(c.estimate(1,:), c.estimate(2,:),'k')
+plot(c.estimate(1,:), c.estimate(2,:)-a.states(2,:),'r')
+hold off
+ylabel('Travel $\lambda$ [deg]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\tilde{\lambda}$','$\hat{\lambda}$', 'Error'}, 'interpreter', 'latex')
+
+subplot(2, 3, 4);
+plot(a.states(1,:), a.states(3,:),'b'), grid on
+hold on
+plot(c.estimate(1,:), c.estimate(3,:),'k')
+plot(c.estimate(1,:), c.estimate(3,:)-a.states(3,:),'r')
+hold off
+ylabel('TravelRate $\dot{\lambda}$ [deg/s]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\dot{\tilde{\lambda}}$','$\dot{\hat{\lambda}}$', 'Error'}, 'interpreter', 'latex')
+
+
+
+
+
+subplot(2, 3, 2);
+plot(a.states(1,:), a.states(4,:),'b'), grid on
+hold on
+plot(c.estimate(1,:), c.estimate(4,:),'k')
+plot(c.estimate(1,:), c.estimate(4,:)-a.states(4,:),'r')
+hold off
+ylabel('Pitch $p$ [deg]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\tilde{p}$','$\hat{p}$', 'Error'}, 'interpreter', 'latex')
+
+subplot(2, 3, 5);
+plot(a.states(1,:), a.states(5,:),'b'), grid on
+hold on
+plot(c.estimate(1,:), c.estimate(5,:),'k')
+plot(c.estimate(1,:), c.estimate(5,:)-a.states(5,:),'r')
+hold off
+ylabel('PitchRate $\dot{p}$ [deg/s]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\dot{\tilde{p}}$','$\dot{\hat{p}}$', 'Error'}, 'interpreter', 'latex')
+
+
+
+
+
+subplot(2, 3, 3);
+plot(a.states(1,:), a.states(6,:),'b'), grid on
+hold on
+plot(c.estimate(1,:), c.estimate(6,:),'k')
+plot(c.estimate(1,:), c.estimate(6,:)-a.states(6,:),'r')
+hold off
+ylabel('Elevation $e$ [deg]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\tilde{e}$','$\hat{e}$', 'Error'}, 'interpreter', 'latex')
+
+subplot(2, 3, 6);
+plot(a.states(1,50:end), a.states(7,50:end),'b'), grid on
+hold on
+plot(c.estimate(1,50:end), c.estimate(7,50:end),'k')
+plot(c.estimate(1,50:end), c.estimate(7,50:end)-a.states(7,50:end),'r')
+hold off
+ylabel('ElevationRate $\dot{e}$ [deg/s]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\dot{\tilde{e}}$','$\dot{\hat{e}}$', 'Error'}, 'interpreter', 'latex')

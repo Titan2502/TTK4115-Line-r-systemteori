@@ -3,9 +3,9 @@
  *
  * Code generation for model "P2p2".
  *
- * Model version              : 1.84
+ * Model version              : 1.94
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 16:12:55 2018
+ * C source code generated on : Fri Oct 12 11:23:09 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -812,6 +812,7 @@ typedef struct {
   real_T Sum1;                         /* '<Root>/Sum1' */
   real_T Gain_dg;                      /* '<S9>/Gain' */
   real_T Deg_2_rad[6];                 /* '<Root>/Deg_2_rad' */
+  real_T R2D1;                         /* '<Root>/R2D1' */
   real_T e_ref;                        /* '<Root>/e_ref' */
   real_T Vs_const;                     /* '<Root>/Vs_const' */
   real_T K_ei;                         /* '<S7>/K_ei' */
@@ -842,6 +843,10 @@ typedef struct {
   struct {
     void *LoggedData;
   } Scope_PWORK;                       /* '<Root>/Scope' */
+
+  struct {
+    void *LoggedData;
+  } Scope1_PWORK;                      /* '<Root>/Scope1' */
 
   struct {
     void *FilePtr;
@@ -967,9 +972,6 @@ struct P_P2p2_T_ {
                                         */
   real_T K_rp;                         /* Variable: K_rp
                                         * Referenced by: '<S6>/K_rp'
-                                        */
-  real_T V_s;                          /* Variable: V_s
-                                        * Referenced by: '<Root>/Vs_const'
                                         */
   real_T HILInitialize_analog_input_maxi;/* Mask Parameter: HILInitialize_analog_input_maxi
                                           * Referenced by: '<Root>/HIL Initialize'
@@ -1187,7 +1189,7 @@ struct P_P2p2_T_ {
   real_T Gainx_Gain;                   /* Expression: 10/9
                                         * Referenced by: '<S4>/Gain: x'
                                         */
-  real_T Gain_Gain;                    /* Expression: 0.5
+  real_T Gain_Gain;                    /* Expression: 0.4
                                         * Referenced by: '<Root>/Gain'
                                         */
   real_T R2D_Gain;                     /* Expression: 180/pi
@@ -1253,6 +1255,12 @@ struct P_P2p2_T_ {
   real_T Deg_2_rad_Gain;               /* Expression: pi/180
                                         * Referenced by: '<Root>/Deg_2_rad'
                                         */
+  real_T Gain1_Gain;                   /* Expression: 2
+                                        * Referenced by: '<Root>/Gain1'
+                                        */
+  real_T R2D1_Gain;                    /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D1'
+                                        */
   real_T Integrator_IC;                /* Expression: 0
                                         * Referenced by: '<S7>/Integrator'
                                         */
@@ -1270,6 +1278,9 @@ struct P_P2p2_T_ {
                                         */
   real_T K_ed_Gain;                    /* Expression: 12
                                         * Referenced by: '<S7>/K_ed'
+                                        */
+  real_T Vs_const_Value;               /* Expression: 0
+                                        * Referenced by: '<Root>/Vs_const'
                                         */
   real_T Backgain_Gain;                /* Expression: 0.5
                                         * Referenced by: '<S1>/Back gain'

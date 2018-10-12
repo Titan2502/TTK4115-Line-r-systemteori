@@ -3,9 +3,9 @@
  *
  * Code generation for model "P3p3".
  *
- * Model version              : 1.106
+ * Model version              : 1.111
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 14:42:53 2018
+ * C source code generated on : Fri Oct 12 15:40:48 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -60,7 +60,7 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&P3p3_B.TravelCounttorad), 0, 0, 21 }
+  { (char_T *)(&P3p3_B.TravelCounttorad), 0, 0, 22 }
   ,
 
   { (char_T *)(&P3p3_DW.HILInitialize_AIMinimums[0]), 0, 0, 68 },
@@ -71,22 +71,24 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&P3p3_DW.HILReadEncoderTimebase_Task), 16, 0, 1 },
 
-  { (char_T *)(&P3p3_DW.ElevationScopedegs_PWORK.LoggedData), 11, 0, 9 },
+  { (char_T *)(&P3p3_DW.ToFile_PWORK.FilePtr), 11, 0, 12 },
 
   { (char_T *)(&P3p3_DW.HILInitialize_ClockModes[0]), 6, 0, 46 },
 
-  { (char_T *)(&P3p3_DW.HILInitialize_POSortedChans[0]), 7, 0, 8 }
+  { (char_T *)(&P3p3_DW.HILInitialize_POSortedChans[0]), 7, 0, 8 },
+
+  { (char_T *)(&P3p3_DW.ToFile_IWORK.Count), 10, 0, 3 }
 };
 
 /* data type transition table for block I/O structure */
 static DataTypeTransitionTable rtBTransTable = {
-  8U,
+  9U,
   rtBTransitions
 };
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&P3p3_P.Joystick_gain_x), 0, 0, 30 },
+  { (char_T *)(&P3p3_P.Joystick_gain_x), 0, 0, 29 },
 
   { (char_T *)(&P3p3_P.HILReadEncoderTimebase_clock), 6, 0, 10 },
 
@@ -94,7 +96,7 @@ static DataTypeTransition rtPTransitions[] = {
 
   { (char_T *)(&P3p3_P.HILInitialize_active), 8, 0, 35 },
 
-  { (char_T *)(&P3p3_P.TravelCounttorad_Gain), 0, 0, 36 },
+  { (char_T *)(&P3p3_P.TravelCounttorad_Gain), 0, 0, 38 },
 
   { (char_T *)(&P3p3_P.GameController_BufferSize), 5, 0, 1 },
 

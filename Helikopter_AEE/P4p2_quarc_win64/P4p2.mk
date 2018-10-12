@@ -129,7 +129,7 @@ RELATIVE_PATH_TO_ANCHOR   = ..
 MODELREF_TARGET_TYPE      = NONE
 
 #-- Support for parallel builds
-START_DIR         = C:\Helikopter_AEE
+START_DIR         = E:\Helikopter_AEE
 MASTER_ANCHOR_DIR = 
 
 #-- Support multi-instance code

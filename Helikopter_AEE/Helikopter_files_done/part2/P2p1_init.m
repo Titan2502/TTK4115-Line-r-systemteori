@@ -38,7 +38,7 @@ K_f = (2*l_h*m_p*g - l_c*m_c*g)/(l_h * V_s);
 L1 = l_p*K_f;
 L2 = l_c*m_c*g - 2*l_h*m_p*g;
 L3 = l_h*K_f;
-L4 = l_h*K_f;
+L4 = -l_h*K_f;
 
 K1 = L1/J_p;
 K2 = L3/J_e;

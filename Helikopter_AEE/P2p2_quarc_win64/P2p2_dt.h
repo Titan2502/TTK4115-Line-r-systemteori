@@ -3,9 +3,9 @@
  *
  * Code generation for model "P2p2".
  *
- * Model version              : 1.84
+ * Model version              : 1.94
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 16:12:55 2018
+ * C source code generated on : Fri Oct 12 11:23:09 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -60,7 +60,7 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&P2p2_B.RateTransitionx), 0, 0, 29 }
+  { (char_T *)(&P2p2_B.RateTransitionx), 0, 0, 30 }
   ,
 
   { (char_T *)(&P2p2_DW.HILInitialize_AIMinimums[0]), 0, 0, 68 },
@@ -71,7 +71,7 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&P2p2_DW.HILReadEncoderTimebase_Task), 16, 0, 1 },
 
-  { (char_T *)(&P2p2_DW.Scope_PWORK.LoggedData), 11, 0, 12 },
+  { (char_T *)(&P2p2_DW.Scope_PWORK.LoggedData), 11, 0, 13 },
 
   { (char_T *)(&P2p2_DW.HILInitialize_ClockModes[0]), 6, 0, 46 },
 
@@ -88,7 +88,7 @@ static DataTypeTransitionTable rtBTransTable = {
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&P2p2_P.Joystick_gain_x), 0, 0, 23 },
+  { (char_T *)(&P2p2_P.Joystick_gain_x), 0, 0, 22 },
 
   { (char_T *)(&P2p2_P.HILReadEncoderTimebase_clock), 6, 0, 10 },
 
@@ -96,7 +96,7 @@ static DataTypeTransition rtPTransitions[] = {
 
   { (char_T *)(&P2p2_P.HILInitialize_active), 8, 0, 35 },
 
-  { (char_T *)(&P2p2_P.RateTransitionx_X0), 0, 0, 43 },
+  { (char_T *)(&P2p2_P.RateTransitionx_X0), 0, 0, 46 },
 
   { (char_T *)(&P2p2_P.GameController_BufferSize), 5, 0, 1 },
 

@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p3".
  *
- * Model version              : 1.129
+ * Model version              : 1.133
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 12:21:12 2018
+ * C source code generated on : Fri Oct 12 08:51:52 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -953,7 +953,7 @@ struct P_P4p3_T_ {
   real_T B[12];                        /* Variable: B
                                         * Referenced by: '<S5>/Gain1'
                                         */
-  real_T C1[12];                       /* Variable: C1
+  real_T C[18];                        /* Variable: C
                                         * Referenced by:
                                         *   '<S5>/Gain'
                                         *   '<S5>/Gain4'
@@ -967,7 +967,7 @@ struct P_P4p3_T_ {
   real_T K[10];                        /* Variable: K
                                         * Referenced by: '<S4>/K'
                                         */
-  real_T L_1[12];                      /* Variable: L_1
+  real_T L[18];                        /* Variable: L
                                         * Referenced by: '<S5>/Gain3'
                                         */
   real_T V_s;                          /* Variable: V_s

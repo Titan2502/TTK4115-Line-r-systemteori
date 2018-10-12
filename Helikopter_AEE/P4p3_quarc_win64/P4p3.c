@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p3".
  *
- * Model version              : 1.129
+ * Model version              : 1.133
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 12:21:12 2018
+ * C source code generated on : Fri Oct 12 08:51:52 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -111,16 +111,17 @@ void P4p3_output0(void)                /* Sample time: [0.0s, 0.0s] */
   real_T rtb_HILReadEncoderTimebase_o2;
   real_T rtb_DeadZoney;
   real_T rtb_Backgain;
-  real_T rtb_Gain4[2];
+  real_T rtb_TmpSignalConversionAtGain1I[2];
   int32_T i;
   real_T tmp[10];
   real_T tmp_0[5];
   real_T tmp_1[6];
-  real_T tmp_2[2];
-  real_T tmp_3[2];
+  real_T tmp_2[3];
+  real_T tmp_3[3];
   real_T tmp_4[6];
   int32_T i_0;
   real_T unnamed_idx_1;
+  real_T unnamed_idx_2;
   real_T u0;
   if (rtmIsMajorTimeStep(P4p3_M)) {
     /* set solver stop time */
@@ -259,9 +260,9 @@ void P4p3_output0(void)                /* Sample time: [0.0s, 0.0s] */
 
   /* Gain: '<S4>/K' */
   for (i = 0; i < 2; i++) {
-    rtb_Gain4[i] = 0.0;
+    rtb_TmpSignalConversionAtGain1I[i] = 0.0;
     for (i_0 = 0; i_0 < 5; i_0++) {
-      rtb_Gain4[i] += tmp[(i_0 << 1) + i] * tmp_0[i_0];
+      rtb_TmpSignalConversionAtGain1I[i] += tmp[(i_0 << 1) + i] * tmp_0[i_0];
     }
   }
 
@@ -271,14 +272,15 @@ void P4p3_output0(void)                /* Sample time: [0.0s, 0.0s] */
   }
 
   /* Sum: '<Root>/Sum' */
-  rtb_Backgain = P4p3_B.Vs_const + rtb_Gain4[0];
+  rtb_Backgain = P4p3_B.Vs_const + rtb_TmpSignalConversionAtGain1I[0];
   if (rtmIsMajorTimeStep(P4p3_M)) {
   }
 
   /* Gain: '<S1>/Front gain' incorporates:
    *  Sum: '<S1>/Add'
    */
-  u0 = (rtb_Gain4[1] + rtb_Backgain) * P4p3_P.Frontgain_Gain;
+  u0 = (rtb_TmpSignalConversionAtGain1I[1] + rtb_Backgain) *
+    P4p3_P.Frontgain_Gain;
 
   /* Saturate: '<S2>/Front motor: Saturation' */
   if (u0 > P4p3_P.FrontmotorSaturation_UpperSat) {
@@ -294,7 +296,8 @@ void P4p3_output0(void)                /* Sample time: [0.0s, 0.0s] */
   /* Gain: '<S1>/Back gain' incorporates:
    *  Sum: '<S1>/Subtract'
    */
-  u0 = (rtb_Backgain - rtb_Gain4[1]) * P4p3_P.Backgain_Gain;
+  u0 = (rtb_Backgain - rtb_TmpSignalConversionAtGain1I[1]) *
+    P4p3_P.Backgain_Gain;
 
   /* Saturate: '<S2>/Back motor: Saturation' */
   if (u0 > P4p3_P.BackmotorSaturation_UpperSat) {
@@ -391,20 +394,20 @@ void P4p3_output0(void)                /* Sample time: [0.0s, 0.0s] */
   /* Gain: '<S5>/Gain' incorporates:
    *  Sum: '<S5>/Sum'
    */
-  for (i = 0; i < 2; i++) {
+  for (i = 0; i < 3; i++) {
     tmp_2[i] = 0.0;
     for (i_0 = 0; i_0 < 6; i_0++) {
-      tmp_2[i] += P4p3_P.C1[(i_0 << 1) + i] * tmp_1[i_0];
+      tmp_2[i] += P4p3_P.C[3 * i_0 + i] * tmp_1[i_0];
     }
   }
 
   /* Gain: '<S5>/Gain4' incorporates:
    *  Sum: '<S5>/Sum'
    */
-  for (i = 0; i < 2; i++) {
+  for (i = 0; i < 3; i++) {
     tmp_3[i] = 0.0;
     for (i_0 = 0; i_0 < 6; i_0++) {
-      tmp_3[i] += P4p3_P.C1[(i_0 << 1) + i] * P4p3_B.Integrator[i_0];
+      tmp_3[i] += P4p3_P.C[3 * i_0 + i] * P4p3_B.Integrator[i_0];
     }
   }
 
@@ -415,17 +418,20 @@ void P4p3_output0(void)                /* Sample time: [0.0s, 0.0s] */
    */
   u0 = tmp_2[0] - tmp_3[0];
   unnamed_idx_1 = tmp_2[1] - tmp_3[1];
+  unnamed_idx_2 = tmp_2[2] - tmp_3[2];
   for (i = 0; i < 6; i++) {
     /* Gain: '<S5>/Gain3' incorporates:
      *  Sum: '<S5>/Sum1'
      */
-    tmp_1[i] = P4p3_P.L_1[i + 6] * unnamed_idx_1 + P4p3_P.L_1[i] * u0;
+    tmp_1[i] = P4p3_P.L[i + 12] * unnamed_idx_2 + (P4p3_P.L[i + 6] *
+      unnamed_idx_1 + P4p3_P.L[i] * u0);
 
     /* Gain: '<S5>/Gain1' incorporates:
      *  SignalConversion: '<S5>/TmpSignal ConversionAtGain1Inport1'
      *  Sum: '<S5>/Sum1'
      */
-    tmp_4[i] = P4p3_P.B[i + 6] * rtb_Gain4[1] + P4p3_P.B[i] * rtb_Backgain;
+    tmp_4[i] = P4p3_P.B[i + 6] * rtb_TmpSignalConversionAtGain1I[1] + P4p3_P.B[i]
+      * rtb_Backgain;
   }
 
   /* Sum: '<S5>/Sum1' incorporates:
@@ -1276,10 +1282,10 @@ RT_MODEL_P4p3_T *P4p3(void)
   P4p3_M->Timing.stepSize2 = 0.01;
 
   /* External mode info */
-  P4p3_M->Sizes.checksums[0] = (747296922U);
-  P4p3_M->Sizes.checksums[1] = (3729259590U);
-  P4p3_M->Sizes.checksums[2] = (364632518U);
-  P4p3_M->Sizes.checksums[3] = (2739289872U);
+  P4p3_M->Sizes.checksums[0] = (4136538481U);
+  P4p3_M->Sizes.checksums[1] = (2237747545U);
+  P4p3_M->Sizes.checksums[2] = (3058204007U);
+  P4p3_M->Sizes.checksums[3] = (1714876315U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
@@ -1445,7 +1451,7 @@ RT_MODEL_P4p3_T *P4p3(void)
   P4p3_M->Sizes.numSampTimes = (3);    /* Number of sample times */
   P4p3_M->Sizes.numBlocks = (63);      /* Number of blocks */
   P4p3_M->Sizes.numBlockIO = (25);     /* Number of block outputs */
-  P4p3_M->Sizes.numBlockPrms = (229);  /* Sum of parameter "widths" */
+  P4p3_M->Sizes.numBlockPrms = (241);  /* Sum of parameter "widths" */
   return P4p3_M;
 }
 

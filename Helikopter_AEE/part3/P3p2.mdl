@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.96"
+    ComputedModelVersion    "1.105"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -57,8 +57,8 @@ Model {
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
 	Extents			[1886.0, 1002.0]
-	ZoomFactor		[1.25]
-	Offset			[-0.49523809523736873, -34.266666666666765]
+	ZoomFactor		[1.0]
+	Offset			[10.759523809524694, -87.0833333333334]
       }
     }
   }
@@ -69,9 +69,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "espewaa"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Sep 14 13:56:35 2018"
-  RTWModifiedTimeStamp	  457630725
-  ModelVersionFormat	  "1.%<AutoIncrement:96>"
+  LastModifiedDate	  "Fri Oct 12 13:47:03 2018"
+  RTWModifiedTimeStamp	  461251660
+  ModelVersionFormat	  "1.%<AutoIncrement:105>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1123,6 +1123,14 @@ Model {
       BlockType		      Terminator
     }
     Block {
+      BlockType		      ToFile
+      Filename		      "untitled.mat"
+      MatrixName	      "ans"
+      SaveFormat	      "Array"
+      Decimation	      "1"
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      TransferFcn
       Numerator		      "[1]"
       Denominator	      "[1 2 1]"
@@ -1145,9 +1153,9 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "125"
+    ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "329"
+    SIDHighWatermark	    "335"
     Block {
       BlockType		      SubSystem
       Name		      "Conversion"
@@ -2151,7 +2159,7 @@ Model {
       Name		      "Joystick"
       SID		      "208"
       Ports		      [0, 2]
-      Position		      [70, 235, 130, 350]
+      Position		      [165, 235, 225, 350]
       ZOrder		      26
       BackgroundColor	      "[0.501961, 0.501961, 0.501961]"
       RequestExecContextInheritance off
@@ -2816,16 +2824,24 @@ Model {
       DisplayOption	      "bar"
     }
     Block {
-      BlockType		      Sum
-      Name		      "Sum"
-      SID		      "270"
+      BlockType		      Mux
+      Name		      "Mux1"
+      SID		      "333"
       Ports		      [2, 1]
-      Position		      [590, 185, 610, 205]
-      ZOrder		      54
+      Position		      [310, 146, 315, 184]
+      ZOrder		      59
       ShowName		      off
-      IconShape		      "round"
-      Inputs		      "|++"
-      InputSameDT	      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "R2D\n"
+      SID		      "335"
+      Position		      [345, 147, 405, 183]
+      ZOrder		      61
+      Gain		      "180/pi"
+      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
@@ -2844,12 +2860,24 @@ Model {
       SaturateOnIntegerOverflow	off
     }
     Block {
-      BlockType		      Constant
-      Name		      "Vs_const"
-      SID		      "271"
-      Position		      [495, 175, 525, 205]
-      ZOrder		      55
-      Value		      "V_s"
+      BlockType		      ToFile
+      Name		      "To File"
+      SID		      "330"
+      Ports		      [1]
+      Position		      [1240, 220, 1300, 250]
+      ZOrder		      56
+      Filename		      "p3p2_states_q1_100_q3_150_r1_03.mat"
+      MatrixName	      "states"
+    }
+    Block {
+      BlockType		      ToFile
+      Name		      "To File1"
+      SID		      "334"
+      Ports		      [1]
+      Position		      [425, 120, 485, 150]
+      ZOrder		      60
+      Filename		      "p3p2_reference_q1_100_q3_150_r1_03.mat"
+      MatrixName	      "reference"
     }
     Block {
       BlockType		      Constant
@@ -2906,8 +2934,18 @@ Model {
       ZOrder		      167
       SrcBlock		      "Mux"
       SrcPort		      1
-      DstBlock		      "Deg_2_rad"
-      DstPort		      1
+      Points		      [23, 0]
+      Branch {
+	ZOrder			270
+	Points			[0, -85]
+	DstBlock		"To File"
+	DstPort			1
+      }
+      Branch {
+	ZOrder			269
+	DstBlock		"Deg_2_rad"
+	DstPort			1
+      }
     }
     Line {
       ZOrder		      184
@@ -2942,8 +2980,18 @@ Model {
       ZOrder		      222
       SrcBlock		      "Joystick"
       SrcPort		      1
-      DstBlock		      "LQR"
-      DstPort		      1
+      Points		      [43, 0]
+      Branch {
+	ZOrder			274
+	Points			[0, -110]
+	DstBlock		"Mux1"
+	DstPort			1
+      }
+      Branch {
+	ZOrder			273
+	DstBlock		"LQR"
+	DstPort			1
+      }
     }
     Line {
       ZOrder		      263
@@ -2964,30 +3012,39 @@ Model {
       ZOrder		      242
       SrcBlock		      "Joystick"
       SrcPort		      2
-      DstBlock		      "LQR"
-      DstPort		      2
+      Points		      [62, 0]
+      Branch {
+	ZOrder			272
+	Points			[0, -145]
+	DstBlock		"Mux1"
+	DstPort			2
+      }
+      Branch {
+	ZOrder			271
+	DstBlock		"LQR"
+	DstPort			2
+      }
     }
     Line {
-      ZOrder		      260
-      SrcBlock		      "Vs_const"
+      ZOrder		      276
+      SrcBlock		      "Mux1"
       SrcPort		      1
-      Points		      [45, 0]
-      DstBlock		      "Sum"
+      DstBlock		      "R2D\n"
       DstPort		      1
     }
     Line {
-      ZOrder		      261
-      SrcBlock		      "LQR"
+      ZOrder		      277
+      SrcBlock		      "R2D\n"
       SrcPort		      1
-      Points		      [30, 0]
-      DstBlock		      "Sum"
-      DstPort		      2
+      Points		      [5, 0; 0, -30]
+      DstBlock		      "To File1"
+      DstPort		      1
     }
     Line {
-      ZOrder		      262
-      SrcBlock		      "Sum"
+      ZOrder		      278
+      SrcBlock		      "LQR"
       SrcPort		      1
-      Points		      [10, 0]
+      Points		      [19, 0; 0, 43; 36, 0]
       DstBlock		      "Conversion"
       DstPort		      2
     }
@@ -3005,7 +3062,7 @@ MatData {
     "      .    N $   8    (     @         %    \"     $    !     0         %  0 $0    $   !5    :7-?=6YI<75E          "
     "!O;&1?8FQO8VL          &]L9%]N86UE            :7-?;6]D96Q?8VQO<VEN9P!I<U]D96QE=&5D              X    P    !@    @ "
     "   ) @        4    (     0    $    !          (  0 !    #@   #@    &    \"     8         !0    @    !     0    $  "
-    "       \"0    @         \".!S0 X    X    !@    @    $          4    (     0    4    !         !     %    2$E,+3$  "
+    "       \"0    @       #@!9\"10 X    X    !@    @    $          4    (     0    4    !         !     %    2$E,+3$  "
     "  .    ,     8    (    \"0(        %    \"     $    !     0         \"  $       X    P    !@    @    ) @        4 "
     "   (     0    $    !          (  0      #@   #![   &    \"     (         !0    @    !     0    $         !0 $  \\ "
     "   !    2P   &]L9%]B;V%R9%]T>7!E '$X                 '$R7W5S8@           '$X7W5S8@           '$T                  "
@@ -3387,7 +3444,7 @@ MatData {
     "-T7VYA;64       X    8 0  !@    @    \"          4    (     0    $    !          4 !  -     0   \"<   !O;&1?;F%M90"
     "      :7-?9&5L971E9    &]B:F5C=%]B;&]C:P  #@   #@    &    \"     0         !0    @    !    !0    $         $     4"
     "   !(24PM,0    X    P    !@    @    ) @        4    (     0    $    !          (  0      #@   #@    &    \"     8 "
-    "        !0    @    !     0    $         \"0    @         \".!S0 "
+    "        !0    @    !     0    $         \"0    @       #@!9\"10 "
   }
   DataRecord {
     Tag			    DataTag2
@@ -3395,6 +3452,6 @@ MatData {
     "-T7VYA;64       X    8 0  !@    @    \"          4    (     0    $    !          4 !  -     0   \"<   !O;&1?;F%M90"
     "      :7-?9&5L971E9    &]B:F5C=%]B;&]C:P  #@   #@    &    \"     0         !0    @    !    !0    $         $     4"
     "   !(24PM,0    X    P    !@    @    ) @        4    (     0    $    !          (  0      #@   #@    &    \"     8 "
-    "        !0    @    !     0    $         \"0    @         \".!S0 "
+    "        !0    @    !     0    $         \"0    @       #@!9\"10 "
   }
 }

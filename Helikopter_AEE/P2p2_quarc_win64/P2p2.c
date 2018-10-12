@@ -3,9 +3,9 @@
  *
  * Code generation for model "P2p2".
  *
- * Model version              : 1.84
+ * Model version              : 1.94
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 16:12:55 2018
+ * C source code generated on : Fri Oct 12 11:23:09 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -224,35 +224,6 @@ void P2p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
                    + P2p2_P.TravelTransferFcn_D * P2p2_B.TravelCounttorad) *
     P2p2_P.Gain_Gain_l;
   if (rtmIsMajorTimeStep(P2p2_M)) {
-    /* ToFile: '<Root>/To File' */
-    if (rtmIsMajorTimeStep(P2p2_M)) {
-      {
-        if (!(++P2p2_DW.ToFile_IWORK.Decimation % 1) &&
-            (P2p2_DW.ToFile_IWORK.Count*2)+1 < 100000000 ) {
-          FILE *fp = (FILE *) P2p2_DW.ToFile_PWORK.FilePtr;
-          if (fp != (NULL)) {
-            real_T u[2];
-            P2p2_DW.ToFile_IWORK.Decimation = 0;
-            u[0] = P2p2_M->Timing.t[1];
-            u[1] = P2p2_B.Gain;
-            if (fwrite(u, sizeof(real_T), 2, fp) != 2) {
-              rtmSetErrorStatus(P2p2_M,
-                                "Error writing to MAT-file travelRate_reference_p2p2_krp2.mat");
-              return;
-            }
-
-            if (((++P2p2_DW.ToFile_IWORK.Count)*2)+1 >= 100000000) {
-              (void)fprintf(stdout,
-                            "*** The ToFile block will stop logging data before\n"
-                            "    the simulation has ended, because it has reached\n"
-                            "    the maximum number of elements (100000000)\n"
-                            "    allowed in MAT-file travelRate_reference_p2p2_krp2.mat.\n");
-            }
-          }
-        }
-      }
-    }
-
     /* Gain: '<S12>/Gain' */
     P2p2_B.Gain_p = P2p2_P.Gain_Gain_a * P2p2_B.TravelCounttorad;
 
@@ -299,7 +270,46 @@ void P2p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
   P2p2_B.Deg_2_rad[3] = P2p2_P.Deg_2_rad_Gain * P2p2_B.Gain_b;
   P2p2_B.Deg_2_rad[4] = P2p2_P.Deg_2_rad_Gain * P2p2_B.Sum1;
   P2p2_B.Deg_2_rad[5] = P2p2_P.Deg_2_rad_Gain * P2p2_B.Gain_dg;
+
+  /* Gain: '<Root>/Gain1' incorporates:
+   *  Gain: '<S6>/K_rp'
+   *  Sum: '<S6>/Sum'
+   */
+  rtb_Frontgain = (P2p2_B.Gain - P2p2_B.Deg_2_rad[1]) * P2p2_P.K_rp *
+    P2p2_P.Gain1_Gain;
+
+  /* Gain: '<Root>/R2D1' */
+  P2p2_B.R2D1 = P2p2_P.R2D1_Gain * rtb_Frontgain;
   if (rtmIsMajorTimeStep(P2p2_M)) {
+    /* ToFile: '<Root>/To File' */
+    if (rtmIsMajorTimeStep(P2p2_M)) {
+      {
+        if (!(++P2p2_DW.ToFile_IWORK.Decimation % 1) &&
+            (P2p2_DW.ToFile_IWORK.Count*2)+1 < 100000000 ) {
+          FILE *fp = (FILE *) P2p2_DW.ToFile_PWORK.FilePtr;
+          if (fp != (NULL)) {
+            real_T u[2];
+            P2p2_DW.ToFile_IWORK.Decimation = 0;
+            u[0] = P2p2_M->Timing.t[1];
+            u[1] = P2p2_B.Gain;
+            if (fwrite(u, sizeof(real_T), 2, fp) != 2) {
+              rtmSetErrorStatus(P2p2_M,
+                                "Error writing to MAT-file travelRate_reference_p2p2_krp_2_gain0_4.mat");
+              return;
+            }
+
+            if (((++P2p2_DW.ToFile_IWORK.Count)*2)+1 >= 100000000) {
+              (void)fprintf(stdout,
+                            "*** The ToFile block will stop logging data before\n"
+                            "    the simulation has ended, because it has reached\n"
+                            "    the maximum number of elements (100000000)\n"
+                            "    allowed in MAT-file travelRate_reference_p2p2_krp_2_gain0_4.mat.\n");
+            }
+          }
+        }
+      }
+    }
+
     /* ToFile: '<Root>/To File1' */
     if (rtmIsMajorTimeStep(P2p2_M)) {
       {
@@ -318,7 +328,7 @@ void P2p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
             u[6] = P2p2_B.Deg_2_rad[5];
             if (fwrite(u, sizeof(real_T), 7, fp) != 7) {
               rtmSetErrorStatus(P2p2_M,
-                                "Error writing to MAT-file state_output_p2p2_krp2.mat");
+                                "Error writing to MAT-file state_output_p2p2_krp_2_gain0_4.mat");
               return;
             }
 
@@ -327,7 +337,7 @@ void P2p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
                             "*** The ToFile block will stop logging data before\n"
                             "    the simulation has ended, because it has reached\n"
                             "    the maximum number of elements (100000000)\n"
-                            "    allowed in MAT-file state_output_p2p2_krp2.mat.\n");
+                            "    allowed in MAT-file state_output_p2p2_krp_2_gain0_4.mat.\n");
             }
           }
         }
@@ -338,13 +348,10 @@ void P2p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
   /* Sum: '<S5>/Sum1' incorporates:
    *  Gain: '<S5>/K_pd '
    *  Gain: '<S5>/K_pp'
-   *  Gain: '<S6>/K_rp'
    *  Sum: '<S5>/Sum'
-   *  Sum: '<S6>/Sum'
    */
-  rtb_Frontgain = ((P2p2_B.Gain - P2p2_B.Deg_2_rad[1]) * P2p2_P.K_rp -
-                   P2p2_B.Deg_2_rad[2]) * P2p2_P.K_pp - P2p2_P.K_pd *
-    P2p2_B.Deg_2_rad[3];
+  rtb_Frontgain = (rtb_Frontgain - P2p2_B.Deg_2_rad[2]) * P2p2_P.K_pp -
+    P2p2_P.K_pd * P2p2_B.Deg_2_rad[3];
 
   /* Integrator: '<S7>/Integrator'
    *
@@ -367,7 +374,7 @@ void P2p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
   rtb_Sum_p = P2p2_B.e_ref - P2p2_B.Deg_2_rad[4];
   if (rtmIsMajorTimeStep(P2p2_M)) {
     /* Constant: '<Root>/Vs_const' */
-    P2p2_B.Vs_const = P2p2_P.V_s;
+    P2p2_B.Vs_const = P2p2_P.Vs_const_Value;
   }
 
   /* Sum: '<Root>/Sum' incorporates:
@@ -997,17 +1004,17 @@ void P2p2_initialize(void)
 
   /* Start for ToFile: '<Root>/To File' */
   {
-    char fileName[509] = "travelRate_reference_p2p2_krp2.mat";
+    char fileName[509] = "travelRate_reference_p2p2_krp_2_gain0_4.mat";
     FILE *fp = (NULL);
     if ((fp = fopen(fileName, "wb")) == (NULL)) {
       rtmSetErrorStatus(P2p2_M,
-                        "Error creating .mat file travelRate_reference_p2p2_krp2.mat");
+                        "Error creating .mat file travelRate_reference_p2p2_krp_2_gain0_4.mat");
       return;
     }
 
     if (rt_WriteMat4FileHeader(fp,2,0,"travelRate_ref")) {
       rtmSetErrorStatus(P2p2_M,
-                        "Error writing mat file header to file travelRate_reference_p2p2_krp2.mat");
+                        "Error writing mat file header to file travelRate_reference_p2p2_krp_2_gain0_4.mat");
       return;
     }
 
@@ -1018,17 +1025,17 @@ void P2p2_initialize(void)
 
   /* Start for ToFile: '<Root>/To File1' */
   {
-    char fileName[509] = "state_output_p2p2_krp2.mat";
+    char fileName[509] = "state_output_p2p2_krp_2_gain0_4.mat";
     FILE *fp = (NULL);
     if ((fp = fopen(fileName, "wb")) == (NULL)) {
       rtmSetErrorStatus(P2p2_M,
-                        "Error creating .mat file state_output_p2p2_krp2.mat");
+                        "Error creating .mat file state_output_p2p2_krp_2_gain0_4.mat");
       return;
     }
 
     if (rt_WriteMat4FileHeader(fp,7,0,"states")) {
       rtmSetErrorStatus(P2p2_M,
-                        "Error writing mat file header to file state_output_p2p2_krp2.mat");
+                        "Error writing mat file header to file state_output_p2p2_krp_2_gain0_4.mat");
       return;
     }
 
@@ -1186,28 +1193,28 @@ void P2p2_terminate(void)
   {
     FILE *fp = (FILE *) P2p2_DW.ToFile_PWORK.FilePtr;
     if (fp != (NULL)) {
-      char fileName[509] = "travelRate_reference_p2p2_krp2.mat";
+      char fileName[509] = "travelRate_reference_p2p2_krp_2_gain0_4.mat";
       if (fclose(fp) == EOF) {
         rtmSetErrorStatus(P2p2_M,
-                          "Error closing MAT-file travelRate_reference_p2p2_krp2.mat");
+                          "Error closing MAT-file travelRate_reference_p2p2_krp_2_gain0_4.mat");
         return;
       }
 
       if ((fp = fopen(fileName, "r+b")) == (NULL)) {
         rtmSetErrorStatus(P2p2_M,
-                          "Error reopening MAT-file travelRate_reference_p2p2_krp2.mat");
+                          "Error reopening MAT-file travelRate_reference_p2p2_krp_2_gain0_4.mat");
         return;
       }
 
       if (rt_WriteMat4FileHeader(fp, 2, P2p2_DW.ToFile_IWORK.Count,
            "travelRate_ref")) {
         rtmSetErrorStatus(P2p2_M,
-                          "Error writing header for travelRate_ref to MAT-file travelRate_reference_p2p2_krp2.mat");
+                          "Error writing header for travelRate_ref to MAT-file travelRate_reference_p2p2_krp_2_gain0_4.mat");
       }
 
       if (fclose(fp) == EOF) {
         rtmSetErrorStatus(P2p2_M,
-                          "Error closing MAT-file travelRate_reference_p2p2_krp2.mat");
+                          "Error closing MAT-file travelRate_reference_p2p2_krp_2_gain0_4.mat");
         return;
       }
 
@@ -1219,28 +1226,28 @@ void P2p2_terminate(void)
   {
     FILE *fp = (FILE *) P2p2_DW.ToFile1_PWORK.FilePtr;
     if (fp != (NULL)) {
-      char fileName[509] = "state_output_p2p2_krp2.mat";
+      char fileName[509] = "state_output_p2p2_krp_2_gain0_4.mat";
       if (fclose(fp) == EOF) {
         rtmSetErrorStatus(P2p2_M,
-                          "Error closing MAT-file state_output_p2p2_krp2.mat");
+                          "Error closing MAT-file state_output_p2p2_krp_2_gain0_4.mat");
         return;
       }
 
       if ((fp = fopen(fileName, "r+b")) == (NULL)) {
         rtmSetErrorStatus(P2p2_M,
-                          "Error reopening MAT-file state_output_p2p2_krp2.mat");
+                          "Error reopening MAT-file state_output_p2p2_krp_2_gain0_4.mat");
         return;
       }
 
       if (rt_WriteMat4FileHeader(fp, 7, P2p2_DW.ToFile1_IWORK.Count, "states"))
       {
         rtmSetErrorStatus(P2p2_M,
-                          "Error writing header for states to MAT-file state_output_p2p2_krp2.mat");
+                          "Error writing header for states to MAT-file state_output_p2p2_krp_2_gain0_4.mat");
       }
 
       if (fclose(fp) == EOF) {
         rtmSetErrorStatus(P2p2_M,
-                          "Error closing MAT-file state_output_p2p2_krp2.mat");
+                          "Error closing MAT-file state_output_p2p2_krp_2_gain0_4.mat");
         return;
       }
 
@@ -1394,10 +1401,10 @@ RT_MODEL_P2p2_T *P2p2(void)
   P2p2_M->Timing.stepSize2 = 0.01;
 
   /* External mode info */
-  P2p2_M->Sizes.checksums[0] = (1014665638U);
-  P2p2_M->Sizes.checksums[1] = (2126874233U);
-  P2p2_M->Sizes.checksums[2] = (433834314U);
-  P2p2_M->Sizes.checksums[3] = (4259246575U);
+  P2p2_M->Sizes.checksums[0] = (160604988U);
+  P2p2_M->Sizes.checksums[1] = (3343861822U);
+  P2p2_M->Sizes.checksums[2] = (4255413375U);
+  P2p2_M->Sizes.checksums[3] = (4291323917U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
@@ -1440,6 +1447,7 @@ RT_MODEL_P2p2_T *P2p2(void)
     P2p2_B.Gain_e = 0.0;
     P2p2_B.Sum1 = 0.0;
     P2p2_B.Gain_dg = 0.0;
+    P2p2_B.R2D1 = 0.0;
     P2p2_B.e_ref = 0.0;
     P2p2_B.Vs_const = 0.0;
     P2p2_B.K_ei = 0.0;
@@ -1551,9 +1559,9 @@ RT_MODEL_P2p2_T *P2p2(void)
   P2p2_M->Sizes.numU = (0);            /* Number of model inputs */
   P2p2_M->Sizes.sysDirFeedThru = (0);  /* The model is not direct feedthrough */
   P2p2_M->Sizes.numSampTimes = (3);    /* Number of sample times */
-  P2p2_M->Sizes.numBlocks = (61);      /* Number of blocks */
-  P2p2_M->Sizes.numBlockIO = (24);     /* Number of block outputs */
-  P2p2_M->Sizes.numBlockPrms = (156);  /* Sum of parameter "widths" */
+  P2p2_M->Sizes.numBlocks = (64);      /* Number of blocks */
+  P2p2_M->Sizes.numBlockIO = (25);     /* Number of block outputs */
+  P2p2_M->Sizes.numBlockPrms = (158);  /* Sum of parameter "widths" */
   return P2p2_M;
 }
 

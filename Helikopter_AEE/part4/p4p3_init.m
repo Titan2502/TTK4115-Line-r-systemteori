@@ -14,7 +14,7 @@
 %%%%%%%%%%% Calibration of the encoder and the hardware for the specific
 %%%%%%%%%%% helicopter
 Joystick_gain_x = 1;
-Joystick_gain_y = -1;
+Joystick_gain_y = -0.5;
 
 
 %%%%%%%%%%% Physical constants
@@ -32,25 +32,29 @@ J_e = m_c*l_c^2 + 2*m_p*l_h^2;
 J_lambda = m_c*l_c^2 + 2*m_p*(l_h^2 + l_p^2);
 
 % Kf til elevation
-V_s = 7.187;
+V_s = 6.802;
 K_f = (2*l_h*m_p*g - l_c*m_c*g)/(l_h * V_s);
-
-% Pitch Controller
-K_pp = 10; 
-K_pd = 10;
-
-% Travel Controller
-K_rp = -1;
 
 L1 = l_p*K_f;
 L2 = l_c*m_c*g - 2*l_h*m_p*g;
 L3 = l_h*K_f;
-L4 = l_h*K_f;
+L4 = -l_h*K_f;
 
 K1 = L1/J_p;
 K2 = L3/J_e;
 K3 = -(L4*L2)/(J_lambda*L3);
 
+% Zeta and omega
+zeta = 0.9;
+T_s = 2;
+omega_n = -(log(0.02*sqrt(1-zeta^2)))/(zeta*T_s);
+
+% Pitch Controller
+K_pp = omega_n^2/K1; 
+K_pd = (2*zeta*omega_n)/K1;
+
+% Travel Rate Controller
+K_rp = -2;
 
 
 %% Part 3: LQR %%
@@ -74,15 +78,11 @@ q2 = 1;
 q3 = 1;
 q4 = 1;
 q5 = 1;
-Q = [q1 0 0 0 0;
-     0 q2 0 0 0;
-     0 0 q3 0 0;
-     0 0 0 q4 0;
-     0 0 0 0 q5];
+Q = diag([q1 q2 q3 q4 q5]);
 
 r1 = 1;
 r2 = 1;
-R = [r1 0;0 r2];
+R = diag([r1 r2]);
 
 % LQR: u = -K*x and P matrix --> u = Pr - K*x
 K = lqr(A_lqr,B_lqr,Q,R);

@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p2".
  *
- * Model version              : 1.126
+ * Model version              : 1.135
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 14 13:14:38 2018
+ * C source code generated on : Fri Oct 12 19:27:42 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -15,9 +15,12 @@
  */
 #ifndef RTW_HEADER_P4p2_h_
 #define RTW_HEADER_P4p2_h_
+#include <stddef.h>
 #include <string.h>
 #ifndef P4p2_COMMON_INCLUDES_
 # define P4p2_COMMON_INCLUDES_
+#include <stdio.h>
+#include <string.h>
 #include "rtwtypes.h"
 #include "simstruc.h"
 #include "fixedpoint.h"
@@ -793,6 +796,9 @@
 
 /* Block signals (auto storage) */
 typedef struct {
+  real_T RateTransitionx;              /* '<S3>/Rate Transition: x' */
+  real_T Joystick_gain_x;              /* '<S3>/Joystick_gain_x' */
+  real_T Gain1;                        /* '<Root>/Gain1' */
   real_T TravelCounttorad;             /* '<S2>/Travel: Count to rad' */
   real_T Gain;                         /* '<S10>/Gain' */
   real_T Gain_d;                       /* '<S11>/Gain' */
@@ -806,13 +812,14 @@ typedef struct {
   real_T Deg_2_rad[6];                 /* '<Root>/Deg_2_rad' */
   real_T Integrator[6];                /* '<S5>/Integrator' */
   real_T Sum2[6];                      /* '<Root>/Sum2' */
-  real_T Vs_const;                     /* '<Root>/Vs_const' */
-  real_T FrontmotorSaturation;         /* '<S2>/Front motor: Saturation' */
-  real_T BackmotorSaturation;          /* '<S2>/Back motor: Saturation' */
-  real_T RateTransitionx;              /* '<S3>/Rate Transition: x' */
-  real_T Joystick_gain_x;              /* '<S3>/Joystick_gain_x' */
+  real_T RateTransition2[6];           /* '<Root>/Rate Transition2' */
   real_T RateTransitiony;              /* '<S3>/Rate Transition: y' */
   real_T Joystick_gain_y;              /* '<S3>/Joystick_gain_y' */
+  real_T Gain_bg;                      /* '<Root>/Gain' */
+  real_T RateTransition[2];            /* '<Root>/Rate Transition' */
+  real_T RateTransition1[6];           /* '<Root>/Rate Transition1' */
+  real_T FrontmotorSaturation;         /* '<S2>/Front motor: Saturation' */
+  real_T BackmotorSaturation;          /* '<S2>/Back motor: Saturation' */
   real_T GameController_o4;            /* '<S3>/Game Controller' */
   real_T GameController_o5;            /* '<S3>/Game Controller' */
   real_T Sum2_l;                       /* '<S12>/Sum2' */
@@ -830,12 +837,16 @@ typedef struct {
   real_T HILInitialize_FilterFrequency[8];/* '<Root>/HIL Initialize' */
   real_T HILInitialize_POSortedFreqs[8];/* '<Root>/HIL Initialize' */
   real_T HILInitialize_POValues[8];    /* '<Root>/HIL Initialize' */
-  real_T HILWriteAnalog_Buffer[2];     /* '<S2>/HIL Write Analog' */
   real_T RateTransitionx_Buffer0;      /* '<S3>/Rate Transition: x' */
   real_T RateTransitiony_Buffer0;      /* '<S3>/Rate Transition: y' */
+  real_T HILWriteAnalog_Buffer[2];     /* '<S2>/HIL Write Analog' */
   t_game_controller GameController_Controller;/* '<S3>/Game Controller' */
   t_card HILInitialize_Card;           /* '<Root>/HIL Initialize' */
   t_task HILReadEncoderTimebase_Task;  /* '<S2>/HIL Read Encoder Timebase' */
+  struct {
+    void *LoggedData;
+  } Scope_PWORK;                       /* '<Root>/Scope' */
+
   struct {
     void *LoggedData;
   } Scope1_PWORK;                      /* '<Root>/Scope1' */
@@ -847,6 +858,18 @@ typedef struct {
   struct {
     void *LoggedData;
   } Scope3_PWORK;                      /* '<Root>/Scope3' */
+
+  struct {
+    void *FilePtr;
+  } ToFile_PWORK;                      /* '<Root>/To File' */
+
+  struct {
+    void *FilePtr;
+  } ToFile1_PWORK;                     /* '<Root>/To File1' */
+
+  struct {
+    void *FilePtr;
+  } ToFile2_PWORK;                     /* '<Root>/To File2' */
 
   struct {
     void *LoggedData;
@@ -889,6 +912,20 @@ typedef struct {
   int32_T HILInitialize_POPolarityVals[8];/* '<Root>/HIL Initialize' */
   int32_T HILReadEncoderTimebase_Buffer[3];/* '<S2>/HIL Read Encoder Timebase' */
   uint32_T HILInitialize_POSortedChans[8];/* '<Root>/HIL Initialize' */
+  struct {
+    int_T Count;
+    int_T Decimation;
+  } ToFile_IWORK;                      /* '<Root>/To File' */
+
+  struct {
+    int_T Count;
+    int_T Decimation;
+  } ToFile1_IWORK;                     /* '<Root>/To File1' */
+
+  struct {
+    int_T Count;
+    int_T Decimation;
+  } ToFile2_IWORK;                     /* '<Root>/To File2' */
 } DW_P4p2_T;
 
 /* Continuous states (auto storage) */
@@ -969,9 +1006,6 @@ struct P_P4p2_T_ {
                                         */
   real_T L[18];                        /* Variable: L
                                         * Referenced by: '<S5>/Gain3'
-                                        */
-  real_T V_s;                          /* Variable: V_s
-                                        * Referenced by: '<Root>/Vs_const'
                                         */
   real_T HILInitialize_analog_input_maxi;/* Mask Parameter: HILInitialize_analog_input_maxi
                                           * Referenced by: '<Root>/HIL Initialize'
@@ -1177,6 +1211,21 @@ struct P_P4p2_T_ {
   boolean_T HILInitialize_set_pwm_params__f;/* Mask Parameter: HILInitialize_set_pwm_params__f
                                              * Referenced by: '<Root>/HIL Initialize'
                                              */
+  real_T RateTransitionx_X0;           /* Expression: 0
+                                        * Referenced by: '<S3>/Rate Transition: x'
+                                        */
+  real_T DeadZonex_Start;              /* Expression: -0.1
+                                        * Referenced by: '<S3>/Dead Zone: x'
+                                        */
+  real_T DeadZonex_End;                /* Expression: 0.1
+                                        * Referenced by: '<S3>/Dead Zone: x'
+                                        */
+  real_T Gainx_Gain;                   /* Expression: 10/9
+                                        * Referenced by: '<S3>/Gain: x'
+                                        */
+  real_T Gain1_Gain;                   /* Expression: 1.5
+                                        * Referenced by: '<Root>/Gain1'
+                                        */
   real_T TravelCounttorad_Gain;        /* Expression: 2*pi/8192
                                         * Referenced by: '<S2>/Travel: Count to rad'
                                         */
@@ -1240,6 +1289,27 @@ struct P_P4p2_T_ {
   real_T Integrator_IC;                /* Expression: 0
                                         * Referenced by: '<S5>/Integrator'
                                         */
+  real_T RateTransitiony_X0;           /* Expression: 0
+                                        * Referenced by: '<S3>/Rate Transition: y'
+                                        */
+  real_T DeadZoney_Start;              /* Expression: -0.1
+                                        * Referenced by: '<S3>/Dead Zone: y'
+                                        */
+  real_T DeadZoney_End;                /* Expression: 0.1
+                                        * Referenced by: '<S3>/Dead Zone: y'
+                                        */
+  real_T Gainy_Gain;                   /* Expression: 10/9
+                                        * Referenced by: '<S3>/Gain: y'
+                                        */
+  real_T Gain_Gain_c;                  /* Expression: -1
+                                        * Referenced by: '<Root>/Gain'
+                                        */
+  real_T R2D_Gain;                     /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D '
+                                        */
+  real_T R2D1_Gain;                    /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D 1'
+                                        */
   real_T Integrator_IC_p;              /* Expression: 0
                                         * Referenced by: '<S12>/Integrator'
                                         */
@@ -1263,30 +1333,6 @@ struct P_P4p2_T_ {
                                         */
   real_T BackmotorSaturation_LowerSat; /* Expression: -5
                                         * Referenced by: '<S2>/Back motor: Saturation'
-                                        */
-  real_T RateTransitionx_X0;           /* Expression: 0
-                                        * Referenced by: '<S3>/Rate Transition: x'
-                                        */
-  real_T DeadZonex_Start;              /* Expression: -0.1
-                                        * Referenced by: '<S3>/Dead Zone: x'
-                                        */
-  real_T DeadZonex_End;                /* Expression: 0.1
-                                        * Referenced by: '<S3>/Dead Zone: x'
-                                        */
-  real_T Gainx_Gain;                   /* Expression: 10/9
-                                        * Referenced by: '<S3>/Gain: x'
-                                        */
-  real_T RateTransitiony_X0;           /* Expression: 0
-                                        * Referenced by: '<S3>/Rate Transition: y'
-                                        */
-  real_T DeadZoney_Start;              /* Expression: -0.1
-                                        * Referenced by: '<S3>/Dead Zone: y'
-                                        */
-  real_T DeadZoney_End;                /* Expression: 0.1
-                                        * Referenced by: '<S3>/Dead Zone: y'
-                                        */
-  real_T Gainy_Gain;                   /* Expression: 10/9
-                                        * Referenced by: '<S3>/Gain: y'
                                         */
   uint16_T GameController_BufferSize;  /* Computed Parameter: GameController_BufferSize
                                         * Referenced by: '<S3>/Game Controller'
@@ -1401,6 +1447,7 @@ struct tag_RTM_P4p2_T {
     } TaskCounters;
 
     struct {
+      boolean_T TID0_2;
       boolean_T TID1_2;
     } RateInteraction;
 

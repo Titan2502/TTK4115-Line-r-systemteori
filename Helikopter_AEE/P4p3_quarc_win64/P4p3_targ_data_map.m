@@ -39,97 +39,97 @@
 	  section.data(2).logicalSrcIdx = 1;
 	  section.data(2).dtTransOffset = 36;
 	
-	  ;% P4p3_P.C1
+	  ;% P4p3_P.C
 	  section.data(3).logicalSrcIdx = 2;
 	  section.data(3).dtTransOffset = 48;
 	
 	  ;% P4p3_P.Joystick_gain_x
 	  section.data(4).logicalSrcIdx = 3;
-	  section.data(4).dtTransOffset = 60;
+	  section.data(4).dtTransOffset = 66;
 	
 	  ;% P4p3_P.Joystick_gain_y
 	  section.data(5).logicalSrcIdx = 4;
-	  section.data(5).dtTransOffset = 61;
+	  section.data(5).dtTransOffset = 67;
 	
 	  ;% P4p3_P.K
 	  section.data(6).logicalSrcIdx = 5;
-	  section.data(6).dtTransOffset = 62;
+	  section.data(6).dtTransOffset = 68;
 	
-	  ;% P4p3_P.L_1
+	  ;% P4p3_P.L
 	  section.data(7).logicalSrcIdx = 6;
-	  section.data(7).dtTransOffset = 72;
+	  section.data(7).dtTransOffset = 78;
 	
 	  ;% P4p3_P.V_s
 	  section.data(8).logicalSrcIdx = 7;
-	  section.data(8).dtTransOffset = 84;
+	  section.data(8).dtTransOffset = 96;
 	
 	  ;% P4p3_P.HILInitialize_analog_input_maxi
 	  section.data(9).logicalSrcIdx = 8;
-	  section.data(9).dtTransOffset = 85;
+	  section.data(9).dtTransOffset = 97;
 	
 	  ;% P4p3_P.HILInitialize_analog_input_mini
 	  section.data(10).logicalSrcIdx = 9;
-	  section.data(10).dtTransOffset = 86;
+	  section.data(10).dtTransOffset = 98;
 	
 	  ;% P4p3_P.HILInitialize_analog_output_max
 	  section.data(11).logicalSrcIdx = 10;
-	  section.data(11).dtTransOffset = 87;
+	  section.data(11).dtTransOffset = 99;
 	
 	  ;% P4p3_P.HILInitialize_analog_output_min
 	  section.data(12).logicalSrcIdx = 11;
-	  section.data(12).dtTransOffset = 88;
+	  section.data(12).dtTransOffset = 100;
 	
 	  ;% P4p3_P.HILInitialize_final_analog_outp
 	  section.data(13).logicalSrcIdx = 12;
-	  section.data(13).dtTransOffset = 89;
+	  section.data(13).dtTransOffset = 101;
 	
 	  ;% P4p3_P.HILInitialize_final_pwm_outputs
 	  section.data(14).logicalSrcIdx = 13;
-	  section.data(14).dtTransOffset = 90;
+	  section.data(14).dtTransOffset = 102;
 	
 	  ;% P4p3_P.HILInitialize_initial_analog_ou
 	  section.data(15).logicalSrcIdx = 14;
-	  section.data(15).dtTransOffset = 91;
+	  section.data(15).dtTransOffset = 103;
 	
 	  ;% P4p3_P.HILInitialize_initial_pwm_outpu
 	  section.data(16).logicalSrcIdx = 15;
-	  section.data(16).dtTransOffset = 92;
+	  section.data(16).dtTransOffset = 104;
 	
 	  ;% P4p3_P.HILInitialize_pwm_frequency
 	  section.data(17).logicalSrcIdx = 16;
-	  section.data(17).dtTransOffset = 93;
+	  section.data(17).dtTransOffset = 105;
 	
 	  ;% P4p3_P.HILInitialize_pwm_leading_deadb
 	  section.data(18).logicalSrcIdx = 17;
-	  section.data(18).dtTransOffset = 94;
+	  section.data(18).dtTransOffset = 106;
 	
 	  ;% P4p3_P.HILInitialize_pwm_trailing_dead
 	  section.data(19).logicalSrcIdx = 18;
-	  section.data(19).dtTransOffset = 95;
+	  section.data(19).dtTransOffset = 107;
 	
 	  ;% P4p3_P.HILInitialize_set_other_outputs
 	  section.data(20).logicalSrcIdx = 19;
-	  section.data(20).dtTransOffset = 96;
+	  section.data(20).dtTransOffset = 108;
 	
 	  ;% P4p3_P.HILInitialize_set_other_outpu_m
 	  section.data(21).logicalSrcIdx = 20;
-	  section.data(21).dtTransOffset = 97;
+	  section.data(21).dtTransOffset = 109;
 	
 	  ;% P4p3_P.HILInitialize_set_other_outpu_k
 	  section.data(22).logicalSrcIdx = 21;
-	  section.data(22).dtTransOffset = 98;
+	  section.data(22).dtTransOffset = 110;
 	
 	  ;% P4p3_P.HILInitialize_set_other_outpu_j
 	  section.data(23).logicalSrcIdx = 22;
-	  section.data(23).dtTransOffset = 99;
+	  section.data(23).dtTransOffset = 111;
 	
 	  ;% P4p3_P.HILInitialize_watchdog_analog_o
 	  section.data(24).logicalSrcIdx = 23;
-	  section.data(24).dtTransOffset = 100;
+	  section.data(24).dtTransOffset = 112;
 	
 	  ;% P4p3_P.HILInitialize_watchdog_pwm_outp
 	  section.data(25).logicalSrcIdx = 24;
-	  section.data(25).dtTransOffset = 101;
+	  section.data(25).dtTransOffset = 113;
 	
       nTotData = nTotData + section.nData;
       paramMap.sections(1) = section;
@@ -960,8 +960,8 @@
   ;%
 
 
-  targMap.checksum0 = 747296922;
-  targMap.checksum1 = 3729259590;
-  targMap.checksum2 = 364632518;
-  targMap.checksum3 = 2739289872;
+  targMap.checksum0 = 4136538481;
+  targMap.checksum1 = 2237747545;
+  targMap.checksum2 = 3058204007;
+  targMap.checksum3 = 1714876315;
 

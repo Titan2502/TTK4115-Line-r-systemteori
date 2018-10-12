@@ -3,9 +3,9 @@
  *
  * Code generation for model "P3p2".
  *
- * Model version              : 1.96
+ * Model version              : 1.105
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 14:42:11 2018
+ * C source code generated on : Fri Oct 12 17:31:03 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -21,22 +21,19 @@ P_P3p2_T P3p2_P = {
   1.0,                                 /* Variable: Joystick_gain_x
                                         * Referenced by: '<S3>/Joystick_gain_x'
                                         */
-  -1.0,                                /* Variable: Joystick_gain_y
+  -0.5,                                /* Variable: Joystick_gain_y
                                         * Referenced by: '<S3>/Joystick_gain_y'
                                         */
 
   /*  Variable: K
    * Referenced by: '<S4>/K'
    */
-  { 0.0, 0.99999999999999922, 0.0, 2.1509225671576937, 1.0, 0.0 },
+  { 0.0, 9.9999999999999947, 0.0, 5.9432329879135457, 22.360679774997894, 0.0 },
 
   /*  Variable: P
    * Referenced by: '<S4>/P'
    */
-  { 0.0, 0.99999999999999911, 1.0, -0.0 },
-  7.187,                               /* Variable: V_s
-                                        * Referenced by: '<Root>/Vs_const'
-                                        */
+  { 0.0, 9.9999999999999947, 22.360679774997898, -0.0 },
   10.0,                                /* Mask Parameter: HILInitialize_analog_input_maxi
                                         * Referenced by: '<Root>/HIL Initialize'
                                         */
@@ -255,30 +252,6 @@ P_P3p2_T P3p2_P = {
   0,                                   /* Mask Parameter: HILInitialize_set_pwm_params__f
                                         * Referenced by: '<Root>/HIL Initialize'
                                         */
-  0.0,                                 /* Expression: 0
-                                        * Referenced by: '<S3>/Rate Transition: x'
-                                        */
-  -0.1,                                /* Expression: -0.1
-                                        * Referenced by: '<S3>/Dead Zone: x'
-                                        */
-  0.1,                                 /* Expression: 0.1
-                                        * Referenced by: '<S3>/Dead Zone: x'
-                                        */
-  1.1111111111111112,                  /* Expression: 10/9
-                                        * Referenced by: '<S3>/Gain: x'
-                                        */
-  0.0,                                 /* Expression: 0
-                                        * Referenced by: '<S3>/Rate Transition: y'
-                                        */
-  -0.1,                                /* Expression: -0.1
-                                        * Referenced by: '<S3>/Dead Zone: y'
-                                        */
-  0.1,                                 /* Expression: 0.1
-                                        * Referenced by: '<S3>/Dead Zone: y'
-                                        */
-  1.1111111111111112,                  /* Expression: 10/9
-                                        * Referenced by: '<S3>/Gain: y'
-                                        */
   0.00076699039394282058,              /* Expression: 2*pi/8192
                                         * Referenced by: '<S2>/Travel: Count to rad'
                                         */
@@ -336,6 +309,30 @@ P_P3p2_T P3p2_P = {
   57.295779513082323,                  /* Expression: 180/pi
                                         * Referenced by: '<S6>/Gain'
                                         */
+  0.0,                                 /* Expression: 0
+                                        * Referenced by: '<S3>/Rate Transition: x'
+                                        */
+  -0.1,                                /* Expression: -0.1
+                                        * Referenced by: '<S3>/Dead Zone: x'
+                                        */
+  0.1,                                 /* Expression: 0.1
+                                        * Referenced by: '<S3>/Dead Zone: x'
+                                        */
+  1.1111111111111112,                  /* Expression: 10/9
+                                        * Referenced by: '<S3>/Gain: x'
+                                        */
+  0.0,                                 /* Expression: 0
+                                        * Referenced by: '<S3>/Rate Transition: y'
+                                        */
+  -0.1,                                /* Expression: -0.1
+                                        * Referenced by: '<S3>/Dead Zone: y'
+                                        */
+  0.1,                                 /* Expression: 0.1
+                                        * Referenced by: '<S3>/Dead Zone: y'
+                                        */
+  1.1111111111111112,                  /* Expression: 10/9
+                                        * Referenced by: '<S3>/Gain: y'
+                                        */
   0.017453292519943295,                /* Expression: pi/180
                                         * Referenced by: '<Root>/Deg_2_rad'
                                         */
@@ -356,6 +353,9 @@ P_P3p2_T P3p2_P = {
                                         */
   -5.0,                                /* Expression: -5
                                         * Referenced by: '<S2>/Back motor: Saturation'
+                                        */
+  57.295779513082323,                  /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D '
                                         */
   12U,                                 /* Computed Parameter: GameController_BufferSize
                                         * Referenced by: '<S3>/Game Controller'

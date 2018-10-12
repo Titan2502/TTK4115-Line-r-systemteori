@@ -14,7 +14,7 @@
 %%%%%%%%%%% Calibration of the encoder and the hardware for the specific
 %%%%%%%%%%% helicopter
 Joystick_gain_x = 1;
-Joystick_gain_y = -1;
+Joystick_gain_y = -0.5;
 
 
 %%%%%%%%%%% Physical constants
@@ -32,26 +32,29 @@ J_e = m_c*l_c^2 + 2*m_p*l_h^2;
 J_lambda = m_c*l_c^2 + 2*m_p*(l_h^2 + l_p^2);
 
 % Kf til elevation
-V_s = 7.187;
+V_s = 6.802;
 K_f = (2*l_h*m_p*g - l_c*m_c*g)/(l_h * V_s);
-
-% Pitch Controller
-K_pp = 10; 
-K_pd = 10;
-
-% Travel Controller
-K_rp = -1;
 
 L1 = l_p*K_f;
 L2 = l_c*m_c*g - 2*l_h*m_p*g;
 L3 = l_h*K_f;
-L4 = l_h*K_f;
+L4 = -l_h*K_f;
 
 K1 = L1/J_p;
 K2 = L3/J_e;
 K3 = -(L4*L2)/(J_lambda*L3);
 
+% Zeta and omega
+zeta = 0.9;
+T_s = 2;
+omega_n = -(log(0.02*sqrt(1-zeta^2)))/(zeta*T_s);
 
+% Pitch Controller
+K_pp = omega_n^2/K1; 
+K_pd = (2*zeta*omega_n)/K1;
+
+% Travel Rate Controller
+K_rp = -2;
 
 %% Part 3 %%
 % State Space equation:: dot(x) = Ax + Bu
@@ -74,20 +77,75 @@ C = [1 0 0 0 0;
      0 0 1 0 0];
 
 % Weighting matrices
-q1 = 1;
+q1 = 100;
 q2 = 1;
-q3 = 1;
-q4 = 1;
-q5 = 1;
-Q = [q1 0 0 0 0;
-     0 q2 0 0 0;
-     0 0 q3 0 0;
-     0 0 0 q4 0;
-     0 0 0 0 q5];
+q3 = 150;
+q4 = 200;
+q5 = 200;
+Q = diag([q1 q2 q3 q4 q5]);
 
-r1 = 1;
+r1 = 0.3;
 r2 = 1;
-R = [r1 0;0 r2];
+R = diag([r1 r2]);
 
 % LQR: u = -K*x and P matrix --> u = Pr - K*x
 K = lqr(A,B,Q,R);
+
+%% Plotting
+a = load('p3p3_states_Q4Q5_200.mat');
+b = load('p3p3_reference_Q4Q5_200.mat');
+c = load('p3p3_reference_int_Q4Q5_200.mat');
+
+figure(3)
+subplot(2, 4, 1);
+plot(a.states(1,:), a.states(2,:),'b'), grid on
+ylabel('Travel $\lambda$ [deg]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+
+subplot(2, 4, 5);
+plot(a.states(1,:), a.states(3,:),'b'), grid on
+ylabel('TravelRate $\dot{\lambda}$ [deg/s]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+
+subplot(2, 4, 2);
+plot(a.states(1,:), a.states(4,:),'b'), grid on
+hold on
+plot(b.reference(1,:), b.reference(2,:), 'r')
+hold off
+ylabel('Pitch $p$ [deg]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\tilde{p}$','$\tilde{p}_c$'}, 'interpreter', 'latex')
+title({'States in blue, reference in red'}, 'interpreter', 'latex')
+
+subplot(2, 4, 6);
+plot(a.states(1,:), a.states(5,:),'b'), grid on
+ylabel('PitchRate $\dot{p}$ [deg/s]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+
+subplot(2, 4, 3);
+plot(a.states(1,:), a.states(6,:),'b'), grid on
+ylabel('Elevation $e$ [deg]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+
+
+subplot(2, 4, 7);
+plot(a.states(1,:), a.states(7,:),'b'), grid on
+hold on
+plot(b.reference(1,:), b.reference(3,:), 'r')
+hold off
+ylabel('Elevation $\dot{e}$ [deg/s]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+legend({'$\tilde{\dot{e}}$','$\tilde{\dot{e}}_c$'}, 'interpreter', 'latex')
+
+
+
+
+subplot(2, 4, 4);
+plot(c.reference_int(1,:), c.reference_int(2,:),'b'), grid on
+ylabel('Error p [deg]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')
+
+subplot(2, 4, 8);
+plot(c.reference_int(1,:), c.reference_int(3,:),'b'), grid on
+ylabel('Error $\dot{e}$ [deg/s]', 'interpreter', 'latex')
+xlabel('$t [s]$', 'interpreter', 'latex')

@@ -3,9 +3,9 @@
  *
  * Code generation for model "P2p2".
  *
- * Model version              : 1.84
+ * Model version              : 1.94
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 16:12:55 2018
+ * C source code generated on : Fri Oct 12 11:23:09 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

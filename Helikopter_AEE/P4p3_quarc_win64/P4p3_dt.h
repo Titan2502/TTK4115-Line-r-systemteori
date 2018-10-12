@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p3".
  *
- * Model version              : 1.129
+ * Model version              : 1.133
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 12:21:12 2018
+ * C source code generated on : Fri Oct 12 08:51:52 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -86,7 +86,7 @@ static DataTypeTransitionTable rtBTransTable = {
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&P4p3_P.A[0]), 0, 0, 102 },
+  { (char_T *)(&P4p3_P.A[0]), 0, 0, 114 },
 
   { (char_T *)(&P4p3_P.HILReadEncoderTimebase_clock), 6, 0, 10 },
 

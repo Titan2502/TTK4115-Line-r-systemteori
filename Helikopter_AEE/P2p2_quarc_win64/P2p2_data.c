@@ -3,9 +3,9 @@
  *
  * Code generation for model "P2p2".
  *
- * Model version              : 1.84
+ * Model version              : 1.94
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Sep 28 16:12:55 2018
+ * C source code generated on : Fri Oct 12 11:23:09 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -24,17 +24,14 @@ P_P2p2_T P2p2_P = {
   -8.0,                                /* Variable: Joystick_gain_y
                                         * Referenced by: '<S4>/Joystick_gain_y'
                                         */
-  7.3079224327464525,                  /* Variable: K_pd
+  8.1384174424437834,                  /* Variable: K_pd
                                         * Referenced by: '<S5>/K_pd '
                                         */
-  15.564895730560675,                  /* Variable: K_pp
+  11.912203139821544,                  /* Variable: K_pp
                                         * Referenced by: '<S5>/K_pp'
                                         */
-  -3.0,                                /* Variable: K_rp
+  -1.0,                                /* Variable: K_rp
                                         * Referenced by: '<S6>/K_rp'
-                                        */
-  6.802,                               /* Variable: V_s
-                                        * Referenced by: '<Root>/Vs_const'
                                         */
   10.0,                                /* Mask Parameter: HILInitialize_analog_input_maxi
                                         * Referenced by: '<Root>/HIL Initialize'
@@ -266,7 +263,7 @@ P_P2p2_T P2p2_P = {
   1.1111111111111112,                  /* Expression: 10/9
                                         * Referenced by: '<S4>/Gain: x'
                                         */
-  0.5,                                 /* Expression: 0.5
+  0.4,                                 /* Expression: 0.4
                                         * Referenced by: '<Root>/Gain'
                                         */
   57.295779513082323,                  /* Expression: 180/pi
@@ -332,6 +329,12 @@ P_P2p2_T P2p2_P = {
   0.017453292519943295,                /* Expression: pi/180
                                         * Referenced by: '<Root>/Deg_2_rad'
                                         */
+  2.0,                                 /* Expression: 2
+                                        * Referenced by: '<Root>/Gain1'
+                                        */
+  57.295779513082323,                  /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D1'
+                                        */
   0.0,                                 /* Expression: 0
                                         * Referenced by: '<S7>/Integrator'
                                         */
@@ -349,6 +352,9 @@ P_P2p2_T P2p2_P = {
                                         */
   12.0,                                /* Expression: 12
                                         * Referenced by: '<S7>/K_ed'
+                                        */
+  0.0,                                 /* Expression: 0
+                                        * Referenced by: '<Root>/Vs_const'
                                         */
   0.5,                                 /* Expression: 0.5
                                         * Referenced by: '<S1>/Back gain'
