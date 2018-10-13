@@ -4,8 +4,8 @@
  * This file was generated automatically by QUARC. It serves as the main
  * entry point for the real-time code.
  *
- * Date:           Fri Oct 12 08:51:49 2018
- * Model version:  1.133
+ * Date:           Sat Oct 13 13:39:34 2018
+ * Model version:  1.142
  * Matlab version: 8.6 (R2014a) 27-Dec-2013
  ****************************************************************************/
 
@@ -104,7 +104,7 @@ static void rt_UpdateContinuousStates(RT_MODEL * S)
  * Global data local to this module *
  *==================================*/
 static struct {
-  int_T overrunFlags[1];
+  int_T overrunFlags[2];
   int_T isrOverrun;
   boolean_T stopExecutionFlag;
   boolean_T startedFlag;
@@ -142,7 +142,7 @@ typedef struct tag_subrate_info {
   int_T eventFlag;
 } subrate_info_T;
 
-static subrate_info_T subrate_info[1];
+static subrate_info_T subrate_info[2];
 
 /* Function: tSubRate ========================================================
  * Abstract:
@@ -197,7 +197,7 @@ qthread_return_t QTHREAD_DECL subrate_start_routine(void * argument)
 static void rt_OneStep(RT_MODEL * S)
 {
   int_T i;
-  int_T eventFlags[1];
+  int_T eventFlags[2];
   real_T tnext;
   int_T *sampleHit = rtmGetSampleHitPtr(S);
 
@@ -220,7 +220,7 @@ static void rt_OneStep(RT_MODEL * S)
     rtmGetSampleHitPtr(S),
     rtmGetPerTaskSampleHitsPtr(S));
   rtsiSetSolverStopTime(rtmGetRTWSolverInfo(S),tnext);
-  for (i=0; i < 1; i++) {
+  for (i=0; i < 2; i++) {
     eventFlags[i] = sampleHit[i + 2];
   }
 
@@ -249,7 +249,7 @@ static void rt_OneStep(RT_MODEL * S)
   /*********************************************
    * Step the model for any other sample times *
    *********************************************/
-  for (i=0; i < 1; i++) {
+  for (i=0; i < 2; i++) {
     if (eventFlags[i]) {
       /* Signal any lower priority tasks that have a hit,
        * then check to see if the task locked the semaphore
@@ -306,7 +306,7 @@ int
    */
   int ext_priority = qsched_get_priority_min(QSCHED_FIFO);
   int min_priority = ext_priority + 2;
-  int max_priority = qsched_get_priority_max(QSCHED_FIFO) - 1;
+  int max_priority = qsched_get_priority_max(QSCHED_FIFO) - 2;
   qsigset_t signal_set;
   qsigaction_t action;
   int_T stack_size = 0;                /* default stack size */
@@ -495,7 +495,7 @@ int
       }
 
       (void) ssPrintf("Creating a multithreaded model\n");
-      for (subrate_index = 0; subrate_index >= 0; --subrate_index) {
+      for (subrate_index = 1; subrate_index >= 0; --subrate_index) {
         subrate_info[subrate_index].S = S;
         subrate_info[subrate_index].tid = 2 + subrate_index;
         result = qsem_init(&subrate_info[subrate_index].sem, 0);
@@ -579,7 +579,7 @@ int
         }
 
         /* Do NOT use the subrate_index variable for this loop! */
-        for (subrate = 0; subrate < 1; subrate++) {
+        for (subrate = 0; subrate < 2; subrate++) {
           qthread_cancel(subrate_info[subrate].thread, subrate_info[subrate].
                          thread_id);
         }
@@ -593,7 +593,7 @@ int
          not be created successfully then subrate_index++ is the index of the last
          successfully created thread.
        */
-      for (subrate_index++; subrate_index < 1; subrate_index++) {
+      for (subrate_index++; subrate_index < 2; subrate_index++) {
         qthread_return_t exit_code;
 
         /*qsem_post(&subrate_info[subrate_index].sem);*/

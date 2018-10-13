@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p3".
  *
- * Model version              : 1.133
+ * Model version              : 1.142
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Oct 12 08:51:52 2018
+ * C source code generated on : Sat Oct 13 13:39:41 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -15,9 +15,12 @@
  */
 #ifndef RTW_HEADER_P4p3_h_
 #define RTW_HEADER_P4p3_h_
+#include <stddef.h>
 #include <string.h>
 #ifndef P4p3_COMMON_INCLUDES_
 # define P4p3_COMMON_INCLUDES_
+#include <stdio.h>
+#include <string.h>
 #include "rtwtypes.h"
 #include "simstruc.h"
 #include "fixedpoint.h"
@@ -806,13 +809,15 @@ typedef struct {
   real_T Deg_2_rad[6];                 /* '<Root>/Deg_2_rad' */
   real_T Integrator[6];                /* '<S5>/Integrator' */
   real_T Sum2[6];                      /* '<Root>/Sum2' */
-  real_T Vs_const;                     /* '<Root>/Vs_const' */
-  real_T FrontmotorSaturation;         /* '<S2>/Front motor: Saturation' */
-  real_T BackmotorSaturation;          /* '<S2>/Back motor: Saturation' */
+  real_T RateTransition2[6];           /* '<Root>/Rate Transition2' */
   real_T RateTransitionx;              /* '<S3>/Rate Transition: x' */
   real_T Joystick_gain_x;              /* '<S3>/Joystick_gain_x' */
   real_T RateTransitiony;              /* '<S3>/Rate Transition: y' */
   real_T Joystick_gain_y;              /* '<S3>/Joystick_gain_y' */
+  real_T RateTransition[2];            /* '<Root>/Rate Transition' */
+  real_T RateTransition1[6];           /* '<Root>/Rate Transition1' */
+  real_T FrontmotorSaturation;         /* '<S2>/Front motor: Saturation' */
+  real_T BackmotorSaturation;          /* '<S2>/Back motor: Saturation' */
   real_T GameController_o4;            /* '<S3>/Game Controller' */
   real_T GameController_o5;            /* '<S3>/Game Controller' */
   real_T Sum2_l;                       /* '<S12>/Sum2' */
@@ -830,9 +835,9 @@ typedef struct {
   real_T HILInitialize_FilterFrequency[8];/* '<Root>/HIL Initialize' */
   real_T HILInitialize_POSortedFreqs[8];/* '<Root>/HIL Initialize' */
   real_T HILInitialize_POValues[8];    /* '<Root>/HIL Initialize' */
-  real_T HILWriteAnalog_Buffer[2];     /* '<S2>/HIL Write Analog' */
   real_T RateTransitionx_Buffer0;      /* '<S3>/Rate Transition: x' */
   real_T RateTransitiony_Buffer0;      /* '<S3>/Rate Transition: y' */
+  real_T HILWriteAnalog_Buffer[2];     /* '<S2>/HIL Write Analog' */
   t_game_controller GameController_Controller;/* '<S3>/Game Controller' */
   t_card HILInitialize_Card;           /* '<Root>/HIL Initialize' */
   t_task HILReadEncoderTimebase_Task;  /* '<S2>/HIL Read Encoder Timebase' */
@@ -847,6 +852,18 @@ typedef struct {
   struct {
     void *LoggedData;
   } Scope3_PWORK;                      /* '<Root>/Scope3' */
+
+  struct {
+    void *FilePtr;
+  } ToFile_PWORK;                      /* '<Root>/To File' */
+
+  struct {
+    void *FilePtr;
+  } ToFile1_PWORK;                     /* '<Root>/To File1' */
+
+  struct {
+    void *FilePtr;
+  } ToFile2_PWORK;                     /* '<Root>/To File2' */
 
   struct {
     void *LoggedData;
@@ -889,6 +906,20 @@ typedef struct {
   int32_T HILInitialize_POPolarityVals[8];/* '<Root>/HIL Initialize' */
   int32_T HILReadEncoderTimebase_Buffer[3];/* '<S2>/HIL Read Encoder Timebase' */
   uint32_T HILInitialize_POSortedChans[8];/* '<Root>/HIL Initialize' */
+  struct {
+    int_T Count;
+    int_T Decimation;
+  } ToFile_IWORK;                      /* '<Root>/To File' */
+
+  struct {
+    int_T Count;
+    int_T Decimation;
+  } ToFile1_IWORK;                     /* '<Root>/To File1' */
+
+  struct {
+    int_T Count;
+    int_T Decimation;
+  } ToFile2_IWORK;                     /* '<Root>/To File2' */
 } DW_P4p3_T;
 
 /* Continuous states (auto storage) */
@@ -953,7 +984,7 @@ struct P_P4p3_T_ {
   real_T B[12];                        /* Variable: B
                                         * Referenced by: '<S5>/Gain1'
                                         */
-  real_T C[18];                        /* Variable: C
+  real_T C1[12];                       /* Variable: C1
                                         * Referenced by:
                                         *   '<S5>/Gain'
                                         *   '<S5>/Gain4'
@@ -967,11 +998,8 @@ struct P_P4p3_T_ {
   real_T K[10];                        /* Variable: K
                                         * Referenced by: '<S4>/K'
                                         */
-  real_T L[18];                        /* Variable: L
+  real_T L_1[12];                      /* Variable: L_1
                                         * Referenced by: '<S5>/Gain3'
-                                        */
-  real_T V_s;                          /* Variable: V_s
-                                        * Referenced by: '<Root>/Vs_const'
                                         */
   real_T HILInitialize_analog_input_maxi;/* Mask Parameter: HILInitialize_analog_input_maxi
                                           * Referenced by: '<Root>/HIL Initialize'
@@ -1219,7 +1247,7 @@ struct P_P4p3_T_ {
   real_T Gain_Gain_lv;                 /* Expression: 180/pi
                                         * Referenced by: '<S6>/Gain'
                                         */
-  real_T offset_e_Value;               /* Expression: -30
+  real_T offset_e_Value;               /* Expression: 0
                                         * Referenced by: '<Root>/offset_e'
                                         */
   real_T ElevationTransferFcn_A;       /* Computed Parameter: ElevationTransferFcn_A
@@ -1239,30 +1267,6 @@ struct P_P4p3_T_ {
                                         */
   real_T Integrator_IC;                /* Expression: 0
                                         * Referenced by: '<S5>/Integrator'
-                                        */
-  real_T Integrator_IC_p;              /* Expression: 0
-                                        * Referenced by: '<S12>/Integrator'
-                                        */
-  real_T Integrator1_IC;               /* Expression: 0
-                                        * Referenced by: '<S12>/Integrator1'
-                                        */
-  real_T Backgain_Gain;                /* Expression: 0.5
-                                        * Referenced by: '<S1>/Back gain'
-                                        */
-  real_T Frontgain_Gain;               /* Expression: 0.5
-                                        * Referenced by: '<S1>/Front gain'
-                                        */
-  real_T FrontmotorSaturation_UpperSat;/* Expression: 5
-                                        * Referenced by: '<S2>/Front motor: Saturation'
-                                        */
-  real_T FrontmotorSaturation_LowerSat;/* Expression: -5
-                                        * Referenced by: '<S2>/Front motor: Saturation'
-                                        */
-  real_T BackmotorSaturation_UpperSat; /* Expression: 5
-                                        * Referenced by: '<S2>/Back motor: Saturation'
-                                        */
-  real_T BackmotorSaturation_LowerSat; /* Expression: -5
-                                        * Referenced by: '<S2>/Back motor: Saturation'
                                         */
   real_T RateTransitionx_X0;           /* Expression: 0
                                         * Referenced by: '<S3>/Rate Transition: x'
@@ -1287,6 +1291,36 @@ struct P_P4p3_T_ {
                                         */
   real_T Gainy_Gain;                   /* Expression: 10/9
                                         * Referenced by: '<S3>/Gain: y'
+                                        */
+  real_T R2D_Gain;                     /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D '
+                                        */
+  real_T R2D1_Gain;                    /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D 1'
+                                        */
+  real_T Integrator_IC_p;              /* Expression: 0
+                                        * Referenced by: '<S12>/Integrator'
+                                        */
+  real_T Integrator1_IC;               /* Expression: 0
+                                        * Referenced by: '<S12>/Integrator1'
+                                        */
+  real_T Backgain_Gain;                /* Expression: 0.5
+                                        * Referenced by: '<S1>/Back gain'
+                                        */
+  real_T Frontgain_Gain;               /* Expression: 0.5
+                                        * Referenced by: '<S1>/Front gain'
+                                        */
+  real_T FrontmotorSaturation_UpperSat;/* Expression: 5
+                                        * Referenced by: '<S2>/Front motor: Saturation'
+                                        */
+  real_T FrontmotorSaturation_LowerSat;/* Expression: -5
+                                        * Referenced by: '<S2>/Front motor: Saturation'
+                                        */
+  real_T BackmotorSaturation_UpperSat; /* Expression: 5
+                                        * Referenced by: '<S2>/Back motor: Saturation'
+                                        */
+  real_T BackmotorSaturation_LowerSat; /* Expression: -5
+                                        * Referenced by: '<S2>/Back motor: Saturation'
                                         */
   uint16_T GameController_BufferSize;  /* Computed Parameter: GameController_BufferSize
                                         * Referenced by: '<S3>/Game Controller'
@@ -1396,12 +1430,17 @@ struct tag_RTM_P4p3_T {
     uint32_T clockTick2;
     uint32_T clockTickH2;
     time_T stepSize2;
+    uint32_T clockTick3;
+    uint32_T clockTickH3;
+    time_T stepSize3;
     struct {
-      uint8_T TID[3];
+      uint8_T TID[4];
     } TaskCounters;
 
     struct {
+      boolean_T TID0_2;
       boolean_T TID1_2;
+      boolean_T TID1_3;
     } RateInteraction;
 
     time_T tStart;
@@ -1417,12 +1456,12 @@ struct tag_RTM_P4p3_T {
     int_T *sampleHits;
     int_T *perTaskSampleHits;
     time_T *t;
-    time_T sampleTimesArray[3];
-    time_T offsetTimesArray[3];
-    int_T sampleTimeTaskIDArray[3];
-    int_T sampleHitArray[3];
-    int_T perTaskSampleHitsArray[9];
-    time_T tArray[3];
+    time_T sampleTimesArray[4];
+    time_T offsetTimesArray[4];
+    int_T sampleTimeTaskIDArray[4];
+    int_T sampleHitArray[4];
+    int_T perTaskSampleHitsArray[16];
+    time_T tArray[4];
   } Timing;
 };
 

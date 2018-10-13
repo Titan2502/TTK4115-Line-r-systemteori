@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p2".
  *
- * Model version              : 1.135
+ * Model version              : 1.138
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Oct 12 19:27:42 2018
+ * C source code generated on : Sat Oct 13 09:47:12 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -30,7 +30,9 @@ int_T rt_WriteMat4FileHeader(FILE *fp,
 void P4p2_output0(void);
 void P4p2_update0(void);
 void P4p2_output2(void);
-void P4p2_update2(void);               /* private model entry point functions */
+void P4p2_update2(void);
+void P4p2_output3(void);
+void P4p2_update3(void);               /* private model entry point functions */
 extern void P4p2_derivatives(void);
 
 #endif                                 /* RTW_HEADER_P4p2_private_h_ */

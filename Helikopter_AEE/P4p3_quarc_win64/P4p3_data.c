@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p3".
  *
- * Model version              : 1.133
+ * Model version              : 1.142
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Oct 12 08:51:52 2018
+ * C source code generated on : Sat Oct 13 13:39:41 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -21,50 +21,44 @@ P_P4p3_T P4p3_P = {
   /*  Variable: A
    * Referenced by: '<S5>/Gain2'
    */
-  { 0.0, 0.0, 0.0, 0.0, 0.0, 0.61173902876295994, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  { 0.0, 0.0, 0.0, 0.0, 0.0, -0.61173902876296, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0,
     0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
     0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 },
 
   /*  Variable: B
    * Referenced by: '<S5>/Gain1'
    */
-  { 0.0, 0.0, 0.0, 0.088749318548173486, 0.0, 0.0, 0.0, 0.55150081586703359, 0.0,
+  { 0.0, 0.0, 0.0, 0.093772618701223581, 0.0, 0.0, 0.0, 0.58271631338376517, 0.0,
     0.0, 0.0, 0.0 },
 
-  /*  Variable: C
+  /*  Variable: C1
    * Referenced by:
    *   '<S5>/Gain'
    *   '<S5>/Gain4'
    */
-  { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
-    0.0, 0.0, 0.0 },
-  1.0,                                 /* Variable: Joystick_gain_x
+  { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0 },
+  0.8,                                 /* Variable: Joystick_gain_x
                                         * Referenced by: '<S3>/Joystick_gain_x'
                                         */
-  -1.0,                                /* Variable: Joystick_gain_y
+  1.0,                                 /* Variable: Joystick_gain_y
                                         * Referenced by: '<S3>/Joystick_gain_y'
                                         */
 
   /*  Variable: K
    * Referenced by: '<S4>/K'
    */
-  { -8.0894753721379659E-17, 2.7641471084228222, 4.560141608359449E-17,
-    3.3202546185011319, 4.8513280966899046, 2.8337364822855884E-16,
-    -7.5209428413709715E-17, 0.99999999999999889, 1.0000000000000002,
-    2.3489232046460511E-17 },
+  { 9.4810277547955373E-16, 3.1132207218793724, 3.4149833277191358E-16,
+    3.3444284824116037, 25.031255487374359, 5.3052973313454859E-17,
+    3.3513012306358531E-15, 1.2247448713915894, 19.999999999999986,
+    3.3793485652424726E-16 },
 
-  /*  Variable: L
+  /*  Variable: L_1
    * Referenced by: '<S5>/Gain3'
    */
-  { 29.059921803181606, 210.32301834378512, 1.0416394754768332,
-    15.135979590506249, -4.6905213420273608E-6, 0.61168446226169138,
-    0.95498828369315869, 13.822981811645722, 28.940078196725182,
-    208.67532577234934, -5.9487446572902663E-6, -6.9378484924202937E-5,
-    -3.0003932636702944E-5, -0.00043758274601348937, -3.6864564660866341E-5,
-    -0.00052970534378620089, 23.000000000093593, 132.00000000108406 },
-  7.187,                               /* Variable: V_s
-                                        * Referenced by: '<Root>/Vs_const'
-                                        */
+  { 236.08788153746673, 543.36659299689279, 22.0032722264706, 120.03755433017957,
+    -0.74245894432962478, -18.613338172424633, -3278.9616184453662,
+    -5610.3736984636989, -0.036899275790079455, -0.41828254471993631,
+    33.996727773529848, 406.95058585699468 },
   10.0,                                /* Mask Parameter: HILInitialize_analog_input_maxi
                                         * Referenced by: '<Root>/HIL Initialize'
                                         */
@@ -325,7 +319,7 @@ P_P4p3_T P4p3_P = {
   57.295779513082323,                  /* Expression: 180/pi
                                         * Referenced by: '<S6>/Gain'
                                         */
-  -30.0,                               /* Expression: -30
+  0.0,                                 /* Expression: 0
                                         * Referenced by: '<Root>/offset_e'
                                         */
   -50.0,                               /* Computed Parameter: ElevationTransferFcn_A
@@ -345,30 +339,6 @@ P_P4p3_T P4p3_P = {
                                         */
   0.0,                                 /* Expression: 0
                                         * Referenced by: '<S5>/Integrator'
-                                        */
-  0.0,                                 /* Expression: 0
-                                        * Referenced by: '<S12>/Integrator'
-                                        */
-  0.0,                                 /* Expression: 0
-                                        * Referenced by: '<S12>/Integrator1'
-                                        */
-  0.5,                                 /* Expression: 0.5
-                                        * Referenced by: '<S1>/Back gain'
-                                        */
-  0.5,                                 /* Expression: 0.5
-                                        * Referenced by: '<S1>/Front gain'
-                                        */
-  5.0,                                 /* Expression: 5
-                                        * Referenced by: '<S2>/Front motor: Saturation'
-                                        */
-  -5.0,                                /* Expression: -5
-                                        * Referenced by: '<S2>/Front motor: Saturation'
-                                        */
-  5.0,                                 /* Expression: 5
-                                        * Referenced by: '<S2>/Back motor: Saturation'
-                                        */
-  -5.0,                                /* Expression: -5
-                                        * Referenced by: '<S2>/Back motor: Saturation'
                                         */
   0.0,                                 /* Expression: 0
                                         * Referenced by: '<S3>/Rate Transition: x'
@@ -393,6 +363,36 @@ P_P4p3_T P4p3_P = {
                                         */
   1.1111111111111112,                  /* Expression: 10/9
                                         * Referenced by: '<S3>/Gain: y'
+                                        */
+  57.295779513082323,                  /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D '
+                                        */
+  57.295779513082323,                  /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D 1'
+                                        */
+  0.0,                                 /* Expression: 0
+                                        * Referenced by: '<S12>/Integrator'
+                                        */
+  0.0,                                 /* Expression: 0
+                                        * Referenced by: '<S12>/Integrator1'
+                                        */
+  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '<S1>/Back gain'
+                                        */
+  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '<S1>/Front gain'
+                                        */
+  5.0,                                 /* Expression: 5
+                                        * Referenced by: '<S2>/Front motor: Saturation'
+                                        */
+  -5.0,                                /* Expression: -5
+                                        * Referenced by: '<S2>/Front motor: Saturation'
+                                        */
+  5.0,                                 /* Expression: 5
+                                        * Referenced by: '<S2>/Back motor: Saturation'
+                                        */
+  -5.0,                                /* Expression: -5
+                                        * Referenced by: '<S2>/Back motor: Saturation'
                                         */
   12U,                                 /* Computed Parameter: GameController_BufferSize
                                         * Referenced by: '<S3>/Game Controller'

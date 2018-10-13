@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p2".
  *
- * Model version              : 1.135
+ * Model version              : 1.138
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Oct 12 19:27:42 2018
+ * C source code generated on : Sat Oct 13 09:47:12 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -64,6 +64,7 @@ time_T rt_SimUpdateDiscreteEvents(
 {
   rtmSampleHitPtr[1] = rtmStepTask(P4p2_M, 1);
   rtmSampleHitPtr[2] = rtmStepTask(P4p2_M, 2);
+  rtmSampleHitPtr[3] = rtmStepTask(P4p2_M, 3);
   UNUSED_PARAMETER(rtmNumSampTimes);
   UNUSED_PARAMETER(rtmTimingData);
   UNUSED_PARAMETER(rtmPerTaskSampleHits);
@@ -94,13 +95,18 @@ static void rate_monotonic_scheduler(void)
   /* update PerTaskSampleHits matrix for non-inline sfcn */
   P4p2_M->Timing.perTaskSampleHits[2] = P4p2_M->Timing.RateInteraction.TID0_2;
 
-  /* tid 1 shares data with slower tid rate: 2 */
+  /* tid 1 shares data with slower tid rates: 2, 3 */
   if (P4p2_M->Timing.TaskCounters.TID[1] == 0) {
     P4p2_M->Timing.RateInteraction.TID1_2 = (P4p2_M->Timing.TaskCounters.TID[2] ==
       0);
 
     /* update PerTaskSampleHits matrix for non-inline sfcn */
-    P4p2_M->Timing.perTaskSampleHits[5] = P4p2_M->Timing.RateInteraction.TID1_2;
+    P4p2_M->Timing.perTaskSampleHits[6] = P4p2_M->Timing.RateInteraction.TID1_2;
+    P4p2_M->Timing.RateInteraction.TID1_3 = (P4p2_M->Timing.TaskCounters.TID[3] ==
+      0);
+
+    /* update PerTaskSampleHits matrix for non-inline sfcn */
+    P4p2_M->Timing.perTaskSampleHits[7] = P4p2_M->Timing.RateInteraction.TID1_3;
   }
 
   /* Compute which subrates run during the next base time step.  Subrates
@@ -108,8 +114,13 @@ static void rate_monotonic_scheduler(void)
    * counter is reset when it reaches its limit (zero means run).
    */
   (P4p2_M->Timing.TaskCounters.TID[2])++;
-  if ((P4p2_M->Timing.TaskCounters.TID[2]) > 4) {/* Sample time: [0.01s, 0.0s] */
+  if ((P4p2_M->Timing.TaskCounters.TID[2]) > 2) {/* Sample time: [0.006s, 0.0s] */
     P4p2_M->Timing.TaskCounters.TID[2] = 0;
+  }
+
+  (P4p2_M->Timing.TaskCounters.TID[3])++;
+  if ((P4p2_M->Timing.TaskCounters.TID[3]) > 4) {/* Sample time: [0.01s, 0.0s] */
+    P4p2_M->Timing.TaskCounters.TID[3] = 0;
   }
 }
 
@@ -196,7 +207,7 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
     }
 
     /* RateTransition: '<S3>/Rate Transition: x' */
-    if (P4p2_M->Timing.RateInteraction.TID1_2) {
+    if (P4p2_M->Timing.RateInteraction.TID1_3) {
       P4p2_B.RateTransitionx = P4p2_DW.RateTransitionx_Buffer0;
     }
 
@@ -315,7 +326,7 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
 
   /* RateTransition: '<S3>/Rate Transition: y' */
   if (rtmIsMajorTimeStep(P4p2_M)) {
-    if (P4p2_M->Timing.RateInteraction.TID1_2) {
+    if (P4p2_M->Timing.RateInteraction.TID1_3) {
       P4p2_B.RateTransitiony = P4p2_DW.RateTransitiony_Buffer0;
     }
 
@@ -592,7 +603,7 @@ void P4p2_derivatives(void)
 }
 
 /* Model output function for TID2 */
-void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
+void P4p2_output2(void)                /* Sample time: [0.006s, 0.0s] */
 {
   /* ToFile: '<Root>/To File' */
   {
@@ -611,7 +622,7 @@ void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
         u[6] = P4p2_B.RateTransition2[5];
         if (fwrite(u, sizeof(real_T), 7, fp) != 7) {
           rtmSetErrorStatus(P4p2_M,
-                            "Error writing to MAT-file p4p2_states_QOystein.mat");
+                            "Error writing to MAT-file p4p2_states_V7.mat");
           return;
         }
 
@@ -620,7 +631,7 @@ void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
                         "*** The ToFile block will stop logging data before\n"
                         "    the simulation has ended, because it has reached\n"
                         "    the maximum number of elements (100000000)\n"
-                        "    allowed in MAT-file p4p2_states_QOystein.mat.\n");
+                        "    allowed in MAT-file p4p2_states_V7.mat.\n");
         }
       }
     }
@@ -639,7 +650,7 @@ void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
         u[2] = P4p2_B.RateTransition[1];
         if (fwrite(u, sizeof(real_T), 3, fp) != 3) {
           rtmSetErrorStatus(P4p2_M,
-                            "Error writing to MAT-file p4p2_reference_QOystein.mat");
+                            "Error writing to MAT-file p4p2_reference_V7.mat");
           return;
         }
 
@@ -648,7 +659,7 @@ void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
                         "*** The ToFile block will stop logging data before\n"
                         "    the simulation has ended, because it has reached\n"
                         "    the maximum number of elements (100000000)\n"
-                        "    allowed in MAT-file p4p2_reference_QOystein.mat.\n");
+                        "    allowed in MAT-file p4p2_reference_V7.mat.\n");
         }
       }
     }
@@ -671,7 +682,7 @@ void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
         u[6] = P4p2_B.RateTransition1[5];
         if (fwrite(u, sizeof(real_T), 7, fp) != 7) {
           rtmSetErrorStatus(P4p2_M,
-                            "Error writing to MAT-file p4p2_estimate_QOystein.mat");
+                            "Error writing to MAT-file p4p2_estimate_V7.mat");
           return;
         }
 
@@ -680,12 +691,36 @@ void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
                         "*** The ToFile block will stop logging data before\n"
                         "    the simulation has ended, because it has reached\n"
                         "    the maximum number of elements (100000000)\n"
-                        "    allowed in MAT-file p4p2_estimate_QOystein.mat.\n");
+                        "    allowed in MAT-file p4p2_estimate_V7.mat.\n");
         }
       }
     }
   }
+}
 
+/* Model update function for TID2 */
+void P4p2_update2(void)                /* Sample time: [0.006s, 0.0s] */
+{
+  /* Update absolute time */
+  /* The "clockTick2" counts the number of times the code of this task has
+   * been executed. The absolute time is the multiplication of "clockTick2"
+   * and "Timing.stepSize2". Size of "clockTick2" ensures timer will not
+   * overflow during the application lifespan selected.
+   * Timer of this task consists of two 32 bit unsigned integers.
+   * The two integers represent the low bits Timing.clockTick2 and the high bits
+   * Timing.clockTickH2. When the low bit overflows to 0, the high bits increment.
+   */
+  if (!(++P4p2_M->Timing.clockTick2)) {
+    ++P4p2_M->Timing.clockTickH2;
+  }
+
+  P4p2_M->Timing.t[2] = P4p2_M->Timing.clockTick2 * P4p2_M->Timing.stepSize2 +
+    P4p2_M->Timing.clockTickH2 * P4p2_M->Timing.stepSize2 * 4294967296.0;
+}
+
+/* Model output function for TID3 */
+void P4p2_output3(void)                /* Sample time: [0.01s, 0.0s] */
+{
   /* S-Function (game_controller_block): '<S3>/Game Controller' */
 
   /* S-Function Block: P4p2/Joystick/Game Controller (game_controller_block) */
@@ -707,8 +742,8 @@ void P4p2_output2(void)                /* Sample time: [0.01s, 0.0s] */
   }
 }
 
-/* Model update function for TID2 */
-void P4p2_update2(void)                /* Sample time: [0.01s, 0.0s] */
+/* Model update function for TID3 */
+void P4p2_update3(void)                /* Sample time: [0.01s, 0.0s] */
 {
   /* Update for RateTransition: '<S3>/Rate Transition: x' */
   P4p2_DW.RateTransitionx_Buffer0 = P4p2_B.GameController_o4;
@@ -717,20 +752,20 @@ void P4p2_update2(void)                /* Sample time: [0.01s, 0.0s] */
   P4p2_DW.RateTransitiony_Buffer0 = P4p2_B.GameController_o5;
 
   /* Update absolute time */
-  /* The "clockTick2" counts the number of times the code of this task has
-   * been executed. The absolute time is the multiplication of "clockTick2"
-   * and "Timing.stepSize2". Size of "clockTick2" ensures timer will not
+  /* The "clockTick3" counts the number of times the code of this task has
+   * been executed. The absolute time is the multiplication of "clockTick3"
+   * and "Timing.stepSize3". Size of "clockTick3" ensures timer will not
    * overflow during the application lifespan selected.
    * Timer of this task consists of two 32 bit unsigned integers.
-   * The two integers represent the low bits Timing.clockTick2 and the high bits
-   * Timing.clockTickH2. When the low bit overflows to 0, the high bits increment.
+   * The two integers represent the low bits Timing.clockTick3 and the high bits
+   * Timing.clockTickH3. When the low bit overflows to 0, the high bits increment.
    */
-  if (!(++P4p2_M->Timing.clockTick2)) {
-    ++P4p2_M->Timing.clockTickH2;
+  if (!(++P4p2_M->Timing.clockTick3)) {
+    ++P4p2_M->Timing.clockTickH3;
   }
 
-  P4p2_M->Timing.t[2] = P4p2_M->Timing.clockTick2 * P4p2_M->Timing.stepSize2 +
-    P4p2_M->Timing.clockTickH2 * P4p2_M->Timing.stepSize2 * 4294967296.0;
+  P4p2_M->Timing.t[3] = P4p2_M->Timing.clockTick3 * P4p2_M->Timing.stepSize3 +
+    P4p2_M->Timing.clockTickH3 * P4p2_M->Timing.stepSize3 * 4294967296.0;
 }
 
 /* Model output wrapper function for compatibility with a static main program */
@@ -743,6 +778,10 @@ void P4p2_output(int_T tid)
 
    case 2 :
     P4p2_output2();
+    break;
+
+   case 3 :
+    P4p2_output3();
     break;
 
    default :
@@ -760,6 +799,10 @@ void P4p2_update(int_T tid)
 
    case 2 :
     P4p2_update2();
+    break;
+
+   case 3 :
+    P4p2_update3();
     break;
 
    default :
@@ -1141,17 +1184,16 @@ void P4p2_initialize(void)
 
   /* Start for ToFile: '<Root>/To File' */
   {
-    char fileName[509] = "p4p2_states_QOystein.mat";
+    char fileName[509] = "p4p2_states_V7.mat";
     FILE *fp = (NULL);
     if ((fp = fopen(fileName, "wb")) == (NULL)) {
-      rtmSetErrorStatus(P4p2_M,
-                        "Error creating .mat file p4p2_states_QOystein.mat");
+      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_states_V7.mat");
       return;
     }
 
     if (rt_WriteMat4FileHeader(fp,7,0,"states")) {
       rtmSetErrorStatus(P4p2_M,
-                        "Error writing mat file header to file p4p2_states_QOystein.mat");
+                        "Error writing mat file header to file p4p2_states_V7.mat");
       return;
     }
 
@@ -1165,17 +1207,16 @@ void P4p2_initialize(void)
 
   /* Start for ToFile: '<Root>/To File1' */
   {
-    char fileName[509] = "p4p2_reference_QOystein.mat";
+    char fileName[509] = "p4p2_reference_V7.mat";
     FILE *fp = (NULL);
     if ((fp = fopen(fileName, "wb")) == (NULL)) {
-      rtmSetErrorStatus(P4p2_M,
-                        "Error creating .mat file p4p2_reference_QOystein.mat");
+      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_reference_V7.mat");
       return;
     }
 
     if (rt_WriteMat4FileHeader(fp,3,0,"reference")) {
       rtmSetErrorStatus(P4p2_M,
-                        "Error writing mat file header to file p4p2_reference_QOystein.mat");
+                        "Error writing mat file header to file p4p2_reference_V7.mat");
       return;
     }
 
@@ -1186,17 +1227,16 @@ void P4p2_initialize(void)
 
   /* Start for ToFile: '<Root>/To File2' */
   {
-    char fileName[509] = "p4p2_estimate_QOystein.mat";
+    char fileName[509] = "p4p2_estimate_V7.mat";
     FILE *fp = (NULL);
     if ((fp = fopen(fileName, "wb")) == (NULL)) {
-      rtmSetErrorStatus(P4p2_M,
-                        "Error creating .mat file p4p2_estimate_QOystein.mat");
+      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_estimate_V7.mat");
       return;
     }
 
     if (rt_WriteMat4FileHeader(fp,7,0,"estimate")) {
       rtmSetErrorStatus(P4p2_M,
-                        "Error writing mat file header to file p4p2_estimate_QOystein.mat");
+                        "Error writing mat file header to file p4p2_estimate_V7.mat");
       return;
     }
 
@@ -1365,27 +1405,24 @@ void P4p2_terminate(void)
   {
     FILE *fp = (FILE *) P4p2_DW.ToFile_PWORK.FilePtr;
     if (fp != (NULL)) {
-      char fileName[509] = "p4p2_states_QOystein.mat";
+      char fileName[509] = "p4p2_states_V7.mat";
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error closing MAT-file p4p2_states_QOystein.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_states_V7.mat");
         return;
       }
 
       if ((fp = fopen(fileName, "r+b")) == (NULL)) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error reopening MAT-file p4p2_states_QOystein.mat");
+        rtmSetErrorStatus(P4p2_M, "Error reopening MAT-file p4p2_states_V7.mat");
         return;
       }
 
       if (rt_WriteMat4FileHeader(fp, 7, P4p2_DW.ToFile_IWORK.Count, "states")) {
         rtmSetErrorStatus(P4p2_M,
-                          "Error writing header for states to MAT-file p4p2_states_QOystein.mat");
+                          "Error writing header for states to MAT-file p4p2_states_V7.mat");
       }
 
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error closing MAT-file p4p2_states_QOystein.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_states_V7.mat");
         return;
       }
 
@@ -1397,28 +1434,26 @@ void P4p2_terminate(void)
   {
     FILE *fp = (FILE *) P4p2_DW.ToFile1_PWORK.FilePtr;
     if (fp != (NULL)) {
-      char fileName[509] = "p4p2_reference_QOystein.mat";
+      char fileName[509] = "p4p2_reference_V7.mat";
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error closing MAT-file p4p2_reference_QOystein.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_reference_V7.mat");
         return;
       }
 
       if ((fp = fopen(fileName, "r+b")) == (NULL)) {
         rtmSetErrorStatus(P4p2_M,
-                          "Error reopening MAT-file p4p2_reference_QOystein.mat");
+                          "Error reopening MAT-file p4p2_reference_V7.mat");
         return;
       }
 
       if (rt_WriteMat4FileHeader(fp, 3, P4p2_DW.ToFile1_IWORK.Count, "reference"))
       {
         rtmSetErrorStatus(P4p2_M,
-                          "Error writing header for reference to MAT-file p4p2_reference_QOystein.mat");
+                          "Error writing header for reference to MAT-file p4p2_reference_V7.mat");
       }
 
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error closing MAT-file p4p2_reference_QOystein.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_reference_V7.mat");
         return;
       }
 
@@ -1430,28 +1465,26 @@ void P4p2_terminate(void)
   {
     FILE *fp = (FILE *) P4p2_DW.ToFile2_PWORK.FilePtr;
     if (fp != (NULL)) {
-      char fileName[509] = "p4p2_estimate_QOystein.mat";
+      char fileName[509] = "p4p2_estimate_V7.mat";
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error closing MAT-file p4p2_estimate_QOystein.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_estimate_V7.mat");
         return;
       }
 
       if ((fp = fopen(fileName, "r+b")) == (NULL)) {
         rtmSetErrorStatus(P4p2_M,
-                          "Error reopening MAT-file p4p2_estimate_QOystein.mat");
+                          "Error reopening MAT-file p4p2_estimate_V7.mat");
         return;
       }
 
       if (rt_WriteMat4FileHeader(fp, 7, P4p2_DW.ToFile2_IWORK.Count, "estimate"))
       {
         rtmSetErrorStatus(P4p2_M,
-                          "Error writing header for estimate to MAT-file p4p2_estimate_QOystein.mat");
+                          "Error writing header for estimate to MAT-file p4p2_estimate_V7.mat");
       }
 
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error closing MAT-file p4p2_estimate_QOystein.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_estimate_V7.mat");
         return;
       }
 
@@ -1570,6 +1603,7 @@ RT_MODEL_P4p2_T *P4p2(void)
     mdlTsMap[0] = 0;
     mdlTsMap[1] = 1;
     mdlTsMap[2] = 2;
+    mdlTsMap[3] = 3;
     P4p2_M->Timing.sampleTimeTaskIDPtr = (&mdlTsMap[0]);
     P4p2_M->Timing.sampleTimes = (&P4p2_M->Timing.sampleTimesArray[0]);
     P4p2_M->Timing.offsetTimes = (&P4p2_M->Timing.offsetTimesArray[0]);
@@ -1577,12 +1611,14 @@ RT_MODEL_P4p2_T *P4p2(void)
     /* task periods */
     P4p2_M->Timing.sampleTimes[0] = (0.0);
     P4p2_M->Timing.sampleTimes[1] = (0.002);
-    P4p2_M->Timing.sampleTimes[2] = (0.01);
+    P4p2_M->Timing.sampleTimes[2] = (0.006);
+    P4p2_M->Timing.sampleTimes[3] = (0.01);
 
     /* task offsets */
     P4p2_M->Timing.offsetTimes[0] = (0.0);
     P4p2_M->Timing.offsetTimes[1] = (0.0);
     P4p2_M->Timing.offsetTimes[2] = (0.0);
+    P4p2_M->Timing.offsetTimes[3] = (0.0);
   }
 
   rtmSetTPtr(P4p2_M, &P4p2_M->Timing.tArray[0]);
@@ -1598,13 +1634,14 @@ RT_MODEL_P4p2_T *P4p2(void)
   rtmSetTFinal(P4p2_M, -1);
   P4p2_M->Timing.stepSize0 = 0.002;
   P4p2_M->Timing.stepSize1 = 0.002;
-  P4p2_M->Timing.stepSize2 = 0.01;
+  P4p2_M->Timing.stepSize2 = 0.006;
+  P4p2_M->Timing.stepSize3 = 0.01;
 
   /* External mode info */
-  P4p2_M->Sizes.checksums[0] = (2200764562U);
-  P4p2_M->Sizes.checksums[1] = (3780030861U);
-  P4p2_M->Sizes.checksums[2] = (4059312090U);
-  P4p2_M->Sizes.checksums[3] = (486416577U);
+  P4p2_M->Sizes.checksums[0] = (411616286U);
+  P4p2_M->Sizes.checksums[1] = (2132139421U);
+  P4p2_M->Sizes.checksums[2] = (2370566536U);
+  P4p2_M->Sizes.checksums[3] = (3142795066U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
@@ -1778,7 +1815,7 @@ RT_MODEL_P4p2_T *P4p2(void)
   P4p2_M->Sizes.numY = (0);            /* Number of model outputs */
   P4p2_M->Sizes.numU = (0);            /* Number of model inputs */
   P4p2_M->Sizes.sysDirFeedThru = (0);  /* The model is not direct feedthrough */
-  P4p2_M->Sizes.numSampTimes = (3);    /* Number of sample times */
+  P4p2_M->Sizes.numSampTimes = (4);    /* Number of sample times */
   P4p2_M->Sizes.numBlocks = (71);      /* Number of blocks */
   P4p2_M->Sizes.numBlockIO = (29);     /* Number of block outputs */
   P4p2_M->Sizes.numBlockPrms = (244);  /* Sum of parameter "widths" */

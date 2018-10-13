@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p2".
  *
- * Model version              : 1.135
+ * Model version              : 1.138
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Fri Oct 12 19:27:42 2018
+ * C source code generated on : Sat Oct 13 09:47:12 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -1223,7 +1223,7 @@ struct P_P4p2_T_ {
   real_T Gainx_Gain;                   /* Expression: 10/9
                                         * Referenced by: '<S3>/Gain: x'
                                         */
-  real_T Gain1_Gain;                   /* Expression: 1.5
+  real_T Gain1_Gain;                   /* Expression: 1
                                         * Referenced by: '<Root>/Gain1'
                                         */
   real_T TravelCounttorad_Gain;        /* Expression: 2*pi/8192
@@ -1301,7 +1301,7 @@ struct P_P4p2_T_ {
   real_T Gainy_Gain;                   /* Expression: 10/9
                                         * Referenced by: '<S3>/Gain: y'
                                         */
-  real_T Gain_Gain_c;                  /* Expression: -1
+  real_T Gain_Gain_c;                  /* Expression: 1
                                         * Referenced by: '<Root>/Gain'
                                         */
   real_T R2D_Gain;                     /* Expression: 180/pi
@@ -1442,13 +1442,17 @@ struct tag_RTM_P4p2_T {
     uint32_T clockTick2;
     uint32_T clockTickH2;
     time_T stepSize2;
+    uint32_T clockTick3;
+    uint32_T clockTickH3;
+    time_T stepSize3;
     struct {
-      uint8_T TID[3];
+      uint8_T TID[4];
     } TaskCounters;
 
     struct {
       boolean_T TID0_2;
       boolean_T TID1_2;
+      boolean_T TID1_3;
     } RateInteraction;
 
     time_T tStart;
@@ -1464,12 +1468,12 @@ struct tag_RTM_P4p2_T {
     int_T *sampleHits;
     int_T *perTaskSampleHits;
     time_T *t;
-    time_T sampleTimesArray[3];
-    time_T offsetTimesArray[3];
-    int_T sampleTimeTaskIDArray[3];
-    int_T sampleHitArray[3];
-    int_T perTaskSampleHitsArray[9];
-    time_T tArray[3];
+    time_T sampleTimesArray[4];
+    time_T offsetTimesArray[4];
+    int_T sampleTimeTaskIDArray[4];
+    int_T sampleHitArray[4];
+    int_T perTaskSampleHitsArray[16];
+    time_T tArray[4];
   } Timing;
 };
 
