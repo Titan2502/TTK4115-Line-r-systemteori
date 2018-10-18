@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p2".
  *
- * Model version              : 1.138
+ * Model version              : 1.104
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Sat Oct 13 09:47:12 2018
+ * C source code generated on : Wed Oct 17 19:13:57 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -114,7 +114,7 @@ static void rate_monotonic_scheduler(void)
    * counter is reset when it reaches its limit (zero means run).
    */
   (P4p2_M->Timing.TaskCounters.TID[2])++;
-  if ((P4p2_M->Timing.TaskCounters.TID[2]) > 2) {/* Sample time: [0.006s, 0.0s] */
+  if ((P4p2_M->Timing.TaskCounters.TID[2]) > 1) {/* Sample time: [0.004s, 0.0s] */
     P4p2_M->Timing.TaskCounters.TID[2] = 0;
   }
 
@@ -136,7 +136,7 @@ static void rt_ertODEUpdateContinuousStates(RTWSolverInfo *si )
   ODE1_IntgData *id = (ODE1_IntgData *)rtsiGetSolverData(si);
   real_T *f0 = id->f[0];
   int_T i;
-  int_T nXc = 11;
+  int_T nXc = 9;
   rtsiSetSimTimeStep(si,MINOR_TIME_STEP);
   rtsiSetdX(si, f0);
   P4p2_derivatives();
@@ -155,15 +155,14 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
   /* local block i/o variables */
   real_T rtb_HILReadEncoderTimebase_o1;
   real_T rtb_HILReadEncoderTimebase_o2;
-  real_T rtb_HILReadEncoderTimebase_o3;
-  real_T rtb_R2D[2];
+  real_T rtb_DeadZoney;
   real_T rtb_Gain1[6];
+  real_T rtb_R2D[2];
   real_T rtb_Sum[3];
+  real_T rtb_TmpSignalConversionAtGain1I[2];
   int32_T i;
-  real_T tmp[10];
-  real_T tmp_0[5];
-  real_T tmp_1[6];
-  real_T tmp_2[6];
+  real_T tmp[6];
+  real_T tmp_0[6];
   int32_T i_0;
   real_T u0;
   if (rtmIsMajorTimeStep(P4p2_M)) {
@@ -202,35 +201,9 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
       } else {
         rtb_HILReadEncoderTimebase_o1 = P4p2_DW.HILReadEncoderTimebase_Buffer[0];
         rtb_HILReadEncoderTimebase_o2 = P4p2_DW.HILReadEncoderTimebase_Buffer[1];
-        rtb_HILReadEncoderTimebase_o3 = P4p2_DW.HILReadEncoderTimebase_Buffer[2];
+        rtb_DeadZoney = P4p2_DW.HILReadEncoderTimebase_Buffer[2];
       }
     }
-
-    /* RateTransition: '<S3>/Rate Transition: x' */
-    if (P4p2_M->Timing.RateInteraction.TID1_3) {
-      P4p2_B.RateTransitionx = P4p2_DW.RateTransitionx_Buffer0;
-    }
-
-    /* End of RateTransition: '<S3>/Rate Transition: x' */
-
-    /* DeadZone: '<S3>/Dead Zone: x' */
-    if (P4p2_B.RateTransitionx > P4p2_P.DeadZonex_End) {
-      u0 = P4p2_B.RateTransitionx - P4p2_P.DeadZonex_End;
-    } else if (P4p2_B.RateTransitionx >= P4p2_P.DeadZonex_Start) {
-      u0 = 0.0;
-    } else {
-      u0 = P4p2_B.RateTransitionx - P4p2_P.DeadZonex_Start;
-    }
-
-    /* End of DeadZone: '<S3>/Dead Zone: x' */
-
-    /* Gain: '<S3>/Joystick_gain_x' incorporates:
-     *  Gain: '<S3>/Gain: x'
-     */
-    P4p2_B.Joystick_gain_x = P4p2_P.Gainx_Gain * u0 * P4p2_P.Joystick_gain_x;
-
-    /* Gain: '<Root>/Gain1' */
-    P4p2_B.Gain1 = P4p2_P.Gain1_Gain * P4p2_B.Joystick_gain_x;
 
     /* Gain: '<S2>/Travel: Count to rad' */
     P4p2_B.TravelCounttorad = P4p2_P.TravelCounttorad_Gain *
@@ -263,8 +236,7 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
     P4p2_P.Gain_Gain_ae;
   if (rtmIsMajorTimeStep(P4p2_M)) {
     /* Gain: '<S2>/Elevation: Count to rad' */
-    P4p2_B.ElevationCounttorad = P4p2_P.ElevationCounttorad_Gain *
-      rtb_HILReadEncoderTimebase_o3;
+    P4p2_B.ElevationCounttorad = P4p2_P.ElevationCounttorad_Gain * rtb_DeadZoney;
 
     /* Gain: '<S6>/Gain' */
     P4p2_B.Gain_e = P4p2_P.Gain_Gain_lv * P4p2_B.ElevationCounttorad;
@@ -324,46 +296,6 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
 
   /* End of RateTransition: '<Root>/Rate Transition2' */
 
-  /* RateTransition: '<S3>/Rate Transition: y' */
-  if (rtmIsMajorTimeStep(P4p2_M)) {
-    if (P4p2_M->Timing.RateInteraction.TID1_3) {
-      P4p2_B.RateTransitiony = P4p2_DW.RateTransitiony_Buffer0;
-    }
-
-    /* DeadZone: '<S3>/Dead Zone: y' */
-    if (P4p2_B.RateTransitiony > P4p2_P.DeadZoney_End) {
-      u0 = P4p2_B.RateTransitiony - P4p2_P.DeadZoney_End;
-    } else if (P4p2_B.RateTransitiony >= P4p2_P.DeadZoney_Start) {
-      u0 = 0.0;
-    } else {
-      u0 = P4p2_B.RateTransitiony - P4p2_P.DeadZoney_Start;
-    }
-
-    /* End of DeadZone: '<S3>/Dead Zone: y' */
-
-    /* Gain: '<S3>/Joystick_gain_y' incorporates:
-     *  Gain: '<S3>/Gain: y'
-     */
-    P4p2_B.Joystick_gain_y = P4p2_P.Gainy_Gain * u0 * P4p2_P.Joystick_gain_y;
-
-    /* Gain: '<Root>/Gain' */
-    P4p2_B.Gain_bg = P4p2_P.Gain_Gain_c * P4p2_B.Joystick_gain_y;
-
-    /* Gain: '<Root>/R2D ' */
-    rtb_R2D[0] = P4p2_P.R2D_Gain * P4p2_B.Gain1;
-    rtb_R2D[1] = P4p2_P.R2D_Gain * P4p2_B.Gain_bg;
-
-    /* RateTransition: '<Root>/Rate Transition' */
-    if (P4p2_M->Timing.RateInteraction.TID1_2) {
-      P4p2_B.RateTransition[0] = rtb_R2D[0];
-      P4p2_B.RateTransition[1] = rtb_R2D[1];
-    }
-
-    /* End of RateTransition: '<Root>/Rate Transition' */
-  }
-
-  /* End of RateTransition: '<S3>/Rate Transition: y' */
-
   /* Gain: '<Root>/R2D 1' */
   rtb_Gain1[0] = P4p2_P.R2D1_Gain * P4p2_B.Integrator[4];
   rtb_Gain1[1] = P4p2_P.R2D1_Gain * P4p2_B.Integrator[5];
@@ -381,37 +313,87 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
 
   /* End of RateTransition: '<Root>/Rate Transition1' */
 
-  /* Gain: '<S4>/K' */
-  for (i = 0; i < 10; i++) {
-    tmp[i] = -P4p2_P.K[i];
-  }
-
-  /* SignalConversion: '<S4>/TmpSignal ConversionAtKInport1' incorporates:
-   *  Gain: '<S4>/K'
-   *  Integrator: '<S12>/Integrator'
-   *  Integrator: '<S12>/Integrator1'
-   */
-  tmp_0[0] = P4p2_B.Integrator[0];
-  tmp_0[1] = P4p2_B.Integrator[1];
-  tmp_0[2] = P4p2_B.Integrator[3];
-  tmp_0[3] = P4p2_X.Integrator_CSTATE_i;
-  tmp_0[4] = P4p2_X.Integrator1_CSTATE;
-
-  /* Gain: '<S4>/K' */
-  for (i = 0; i < 2; i++) {
-    rtb_R2D[i] = 0.0;
-    for (i_0 = 0; i_0 < 5; i_0++) {
-      rtb_R2D[i] += tmp[(i_0 << 1) + i] * tmp_0[i_0];
+  /* RateTransition: '<S3>/Rate Transition: x' */
+  if (rtmIsMajorTimeStep(P4p2_M)) {
+    if (P4p2_M->Timing.RateInteraction.TID1_3) {
+      P4p2_B.RateTransitionx = P4p2_DW.RateTransitionx_Buffer0;
     }
+
+    /* DeadZone: '<S3>/Dead Zone: x' */
+    if (P4p2_B.RateTransitionx > P4p2_P.DeadZonex_End) {
+      rtb_DeadZoney = P4p2_B.RateTransitionx - P4p2_P.DeadZonex_End;
+    } else if (P4p2_B.RateTransitionx >= P4p2_P.DeadZonex_Start) {
+      rtb_DeadZoney = 0.0;
+    } else {
+      rtb_DeadZoney = P4p2_B.RateTransitionx - P4p2_P.DeadZonex_Start;
+    }
+
+    /* End of DeadZone: '<S3>/Dead Zone: x' */
+
+    /* Gain: '<S3>/Joystick_gain_x' incorporates:
+     *  Gain: '<S3>/Gain: x'
+     */
+    P4p2_B.Joystick_gain_x = P4p2_P.Gainx_Gain * rtb_DeadZoney *
+      P4p2_P.Joystick_gain_x;
+
+    /* RateTransition: '<S3>/Rate Transition: y' */
+    if (P4p2_M->Timing.RateInteraction.TID1_3) {
+      P4p2_B.RateTransitiony = P4p2_DW.RateTransitiony_Buffer0;
+    }
+
+    /* End of RateTransition: '<S3>/Rate Transition: y' */
+
+    /* DeadZone: '<S3>/Dead Zone: y' */
+    if (P4p2_B.RateTransitiony > P4p2_P.DeadZoney_End) {
+      rtb_DeadZoney = P4p2_B.RateTransitiony - P4p2_P.DeadZoney_End;
+    } else if (P4p2_B.RateTransitiony >= P4p2_P.DeadZoney_Start) {
+      rtb_DeadZoney = 0.0;
+    } else {
+      rtb_DeadZoney = P4p2_B.RateTransitiony - P4p2_P.DeadZoney_Start;
+    }
+
+    /* End of DeadZone: '<S3>/Dead Zone: y' */
+
+    /* Gain: '<S3>/Joystick_gain_y' incorporates:
+     *  Gain: '<S3>/Gain: y'
+     */
+    P4p2_B.Joystick_gain_y = P4p2_P.Gainy_Gain * rtb_DeadZoney *
+      P4p2_P.Joystick_gain_y;
+
+    /* SignalConversion: '<S4>/TmpSignal ConversionAtPInport1' */
+    rtb_R2D[0] = P4p2_B.Joystick_gain_x;
+    rtb_R2D[1] = P4p2_B.Joystick_gain_y;
+
+    /* Gain: '<S4>/P' */
+    P4p2_B.P[0] = 0.0;
+    P4p2_B.P[0] += P4p2_P.P[0] * rtb_R2D[0];
+    P4p2_B.P[0] += P4p2_P.P[2] * rtb_R2D[1];
+    P4p2_B.P[1] = 0.0;
+    P4p2_B.P[1] += P4p2_P.P[1] * rtb_R2D[0];
+    P4p2_B.P[1] += P4p2_P.P[3] * rtb_R2D[1];
   }
 
+  /* End of RateTransition: '<S3>/Rate Transition: x' */
+
+  /* Sum: '<S4>/Sum' incorporates:
+   *  Gain: '<S4>/K'
+   *  SignalConversion: '<S4>/TmpSignal ConversionAtKInport1'
+   */
+  for (i = 0; i < 2; i++) {
+    rtb_TmpSignalConversionAtGain1I[i] = P4p2_B.P[i] - ((P4p2_P.K[i + 2] *
+      P4p2_B.Deg_2_rad[3] + P4p2_P.K[i] * P4p2_B.Deg_2_rad[2]) + P4p2_P.K[i + 4]
+      * P4p2_B.Deg_2_rad[5]);
+  }
+
+  /* End of Sum: '<S4>/Sum' */
   if (rtmIsMajorTimeStep(P4p2_M)) {
   }
 
   /* Gain: '<S1>/Front gain' incorporates:
    *  Sum: '<S1>/Add'
    */
-  u0 = (rtb_R2D[1] + rtb_R2D[0]) * P4p2_P.Frontgain_Gain;
+  u0 = (rtb_TmpSignalConversionAtGain1I[1] + rtb_TmpSignalConversionAtGain1I[0])
+    * P4p2_P.Frontgain_Gain;
 
   /* Saturate: '<S2>/Front motor: Saturation' */
   if (u0 > P4p2_P.FrontmotorSaturation_UpperSat) {
@@ -427,7 +409,8 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
   /* Gain: '<S1>/Back gain' incorporates:
    *  Sum: '<S1>/Subtract'
    */
-  u0 = (rtb_R2D[0] - rtb_R2D[1]) * P4p2_P.Backgain_Gain;
+  u0 = (rtb_TmpSignalConversionAtGain1I[0] - rtb_TmpSignalConversionAtGain1I[1])
+    * P4p2_P.Backgain_Gain;
 
   /* Saturate: '<S2>/Back motor: Saturation' */
   if (u0 > P4p2_P.BackmotorSaturation_UpperSat) {
@@ -457,12 +440,6 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
     }
   }
 
-  /* Sum: '<S12>/Sum2' */
-  P4p2_B.Sum2_l = P4p2_B.Integrator[0] - P4p2_B.Gain1;
-
-  /* Sum: '<S12>/Sum' */
-  P4p2_B.Sum = P4p2_B.Integrator[3] - P4p2_B.Gain_bg;
-
   /* SignalConversion: '<S5>/TmpSignal ConversionAtGainInport1' */
   rtb_Gain1[0] = P4p2_B.Deg_2_rad[2];
   rtb_Gain1[1] = P4p2_B.Deg_2_rad[3];
@@ -481,9 +458,12 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
 
   /* End of Gain: '<S5>/Gain' */
 
-  /* Gain: '<S5>/Gain1' */
+  /* Gain: '<S5>/Gain1' incorporates:
+   *  SignalConversion: '<S5>/TmpSignal ConversionAtGain1Inport1'
+   */
   for (i = 0; i < 6; i++) {
-    rtb_Gain1[i] = P4p2_P.B[i + 6] * rtb_R2D[1] + P4p2_P.B[i] * rtb_R2D[0];
+    rtb_Gain1[i] = P4p2_P.B[i + 6] * rtb_TmpSignalConversionAtGain1I[1] +
+      P4p2_P.B[i] * 0.0;
   }
 
   /* End of Gain: '<S5>/Gain1' */
@@ -504,24 +484,37 @@ void P4p2_output0(void)                /* Sample time: [0.0s, 0.0s] */
     /* Sum: '<S5>/Sum1' incorporates:
      *  Gain: '<S5>/Gain3'
      */
-    tmp_1[i] = ((P4p2_P.L[i + 6] * rtb_Sum[1] + P4p2_P.L[i] * rtb_Sum[0]) +
-                P4p2_P.L[i + 12] * rtb_Sum[2]) + rtb_Gain1[i];
+    tmp[i] = ((P4p2_P.L[i + 6] * rtb_Sum[1] + P4p2_P.L[i] * rtb_Sum[0]) +
+              P4p2_P.L[i + 12] * rtb_Sum[2]) + rtb_Gain1[i];
 
     /* Gain: '<S5>/Gain2' incorporates:
      *  Sum: '<S5>/Sum1'
      */
-    tmp_2[i] = 0.0;
+    tmp_0[i] = 0.0;
     for (i_0 = 0; i_0 < 6; i_0++) {
-      tmp_2[i] += P4p2_P.A[6 * i_0 + i] * P4p2_B.Integrator[i_0];
+      tmp_0[i] += P4p2_P.A[6 * i_0 + i] * P4p2_B.Integrator[i_0];
     }
 
     /* End of Gain: '<S5>/Gain2' */
 
     /* Sum: '<S5>/Sum1' */
-    P4p2_B.Sum1_d[i] = tmp_1[i] + tmp_2[i];
+    P4p2_B.Sum1_f[i] = tmp[i] + tmp_0[i];
   }
 
   /* End of Sum: '<S5>/Sum' */
+  if (rtmIsMajorTimeStep(P4p2_M)) {
+    /* Gain: '<Root>/R2D ' */
+    rtb_R2D[0] *= P4p2_P.R2D_Gain;
+    rtb_R2D[1] *= P4p2_P.R2D_Gain;
+
+    /* RateTransition: '<Root>/Rate Transition' */
+    if (P4p2_M->Timing.RateInteraction.TID1_2) {
+      P4p2_B.RateTransition[0] = rtb_R2D[0];
+      P4p2_B.RateTransition[1] = rtb_R2D[1];
+    }
+
+    /* End of RateTransition: '<Root>/Rate Transition' */
+  }
 }
 
 /* Model update function for TID0 */
@@ -590,20 +583,14 @@ void P4p2_derivatives(void)
 
   /* Derivatives for Integrator: '<S5>/Integrator' */
   for (i = 0; i < 6; i++) {
-    _rtXdot->Integrator_CSTATE[i] = P4p2_B.Sum1_d[i];
+    _rtXdot->Integrator_CSTATE[i] = P4p2_B.Sum1_f[i];
   }
 
   /* End of Derivatives for Integrator: '<S5>/Integrator' */
-
-  /* Derivatives for Integrator: '<S12>/Integrator' */
-  _rtXdot->Integrator_CSTATE_i = P4p2_B.Sum2_l;
-
-  /* Derivatives for Integrator: '<S12>/Integrator1' */
-  _rtXdot->Integrator1_CSTATE = P4p2_B.Sum;
 }
 
 /* Model output function for TID2 */
-void P4p2_output2(void)                /* Sample time: [0.006s, 0.0s] */
+void P4p2_output2(void)                /* Sample time: [0.004s, 0.0s] */
 {
   /* ToFile: '<Root>/To File' */
   {
@@ -622,7 +609,7 @@ void P4p2_output2(void)                /* Sample time: [0.006s, 0.0s] */
         u[6] = P4p2_B.RateTransition2[5];
         if (fwrite(u, sizeof(real_T), 7, fp) != 7) {
           rtmSetErrorStatus(P4p2_M,
-                            "Error writing to MAT-file p4p2_states_V7.mat");
+                            "Error writing to MAT-file p4p2_states_uV1.mat");
           return;
         }
 
@@ -631,35 +618,7 @@ void P4p2_output2(void)                /* Sample time: [0.006s, 0.0s] */
                         "*** The ToFile block will stop logging data before\n"
                         "    the simulation has ended, because it has reached\n"
                         "    the maximum number of elements (100000000)\n"
-                        "    allowed in MAT-file p4p2_states_V7.mat.\n");
-        }
-      }
-    }
-  }
-
-  /* ToFile: '<Root>/To File1' */
-  {
-    if (!(++P4p2_DW.ToFile1_IWORK.Decimation % 1) &&
-        (P4p2_DW.ToFile1_IWORK.Count*3)+1 < 100000000 ) {
-      FILE *fp = (FILE *) P4p2_DW.ToFile1_PWORK.FilePtr;
-      if (fp != (NULL)) {
-        real_T u[3];
-        P4p2_DW.ToFile1_IWORK.Decimation = 0;
-        u[0] = P4p2_M->Timing.t[2];
-        u[1] = P4p2_B.RateTransition[0];
-        u[2] = P4p2_B.RateTransition[1];
-        if (fwrite(u, sizeof(real_T), 3, fp) != 3) {
-          rtmSetErrorStatus(P4p2_M,
-                            "Error writing to MAT-file p4p2_reference_V7.mat");
-          return;
-        }
-
-        if (((++P4p2_DW.ToFile1_IWORK.Count)*3)+1 >= 100000000) {
-          (void)fprintf(stdout,
-                        "*** The ToFile block will stop logging data before\n"
-                        "    the simulation has ended, because it has reached\n"
-                        "    the maximum number of elements (100000000)\n"
-                        "    allowed in MAT-file p4p2_reference_V7.mat.\n");
+                        "    allowed in MAT-file p4p2_states_uV1.mat.\n");
         }
       }
     }
@@ -682,7 +641,7 @@ void P4p2_output2(void)                /* Sample time: [0.006s, 0.0s] */
         u[6] = P4p2_B.RateTransition1[5];
         if (fwrite(u, sizeof(real_T), 7, fp) != 7) {
           rtmSetErrorStatus(P4p2_M,
-                            "Error writing to MAT-file p4p2_estimate_V7.mat");
+                            "Error writing to MAT-file p4p2_estimate_uV1.mat");
           return;
         }
 
@@ -691,7 +650,35 @@ void P4p2_output2(void)                /* Sample time: [0.006s, 0.0s] */
                         "*** The ToFile block will stop logging data before\n"
                         "    the simulation has ended, because it has reached\n"
                         "    the maximum number of elements (100000000)\n"
-                        "    allowed in MAT-file p4p2_estimate_V7.mat.\n");
+                        "    allowed in MAT-file p4p2_estimate_uV1.mat.\n");
+        }
+      }
+    }
+  }
+
+  /* ToFile: '<Root>/To File1' */
+  {
+    if (!(++P4p2_DW.ToFile1_IWORK.Decimation % 1) &&
+        (P4p2_DW.ToFile1_IWORK.Count*3)+1 < 100000000 ) {
+      FILE *fp = (FILE *) P4p2_DW.ToFile1_PWORK.FilePtr;
+      if (fp != (NULL)) {
+        real_T u[3];
+        P4p2_DW.ToFile1_IWORK.Decimation = 0;
+        u[0] = P4p2_M->Timing.t[2];
+        u[1] = P4p2_B.RateTransition[0];
+        u[2] = P4p2_B.RateTransition[1];
+        if (fwrite(u, sizeof(real_T), 3, fp) != 3) {
+          rtmSetErrorStatus(P4p2_M,
+                            "Error writing to MAT-file p4p2_reference_uV1.mat");
+          return;
+        }
+
+        if (((++P4p2_DW.ToFile1_IWORK.Count)*3)+1 >= 100000000) {
+          (void)fprintf(stdout,
+                        "*** The ToFile block will stop logging data before\n"
+                        "    the simulation has ended, because it has reached\n"
+                        "    the maximum number of elements (100000000)\n"
+                        "    allowed in MAT-file p4p2_reference_uV1.mat.\n");
         }
       }
     }
@@ -699,7 +686,7 @@ void P4p2_output2(void)                /* Sample time: [0.006s, 0.0s] */
 }
 
 /* Model update function for TID2 */
-void P4p2_update2(void)                /* Sample time: [0.006s, 0.0s] */
+void P4p2_update2(void)                /* Sample time: [0.004s, 0.0s] */
 {
   /* Update absolute time */
   /* The "clockTick2" counts the number of times the code of this task has
@@ -1179,21 +1166,18 @@ void P4p2_initialize(void)
     }
   }
 
-  /* Start for RateTransition: '<S3>/Rate Transition: x' */
-  P4p2_B.RateTransitionx = P4p2_P.RateTransitionx_X0;
-
   /* Start for ToFile: '<Root>/To File' */
   {
-    char fileName[509] = "p4p2_states_V7.mat";
+    char fileName[509] = "p4p2_states_uV1.mat";
     FILE *fp = (NULL);
     if ((fp = fopen(fileName, "wb")) == (NULL)) {
-      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_states_V7.mat");
+      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_states_uV1.mat");
       return;
     }
 
     if (rt_WriteMat4FileHeader(fp,7,0,"states")) {
       rtmSetErrorStatus(P4p2_M,
-                        "Error writing mat file header to file p4p2_states_V7.mat");
+                        "Error writing mat file header to file p4p2_states_uV1.mat");
       return;
     }
 
@@ -1202,41 +1186,18 @@ void P4p2_initialize(void)
     P4p2_DW.ToFile_PWORK.FilePtr = fp;
   }
 
-  /* Start for RateTransition: '<S3>/Rate Transition: y' */
-  P4p2_B.RateTransitiony = P4p2_P.RateTransitiony_X0;
-
-  /* Start for ToFile: '<Root>/To File1' */
-  {
-    char fileName[509] = "p4p2_reference_V7.mat";
-    FILE *fp = (NULL);
-    if ((fp = fopen(fileName, "wb")) == (NULL)) {
-      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_reference_V7.mat");
-      return;
-    }
-
-    if (rt_WriteMat4FileHeader(fp,3,0,"reference")) {
-      rtmSetErrorStatus(P4p2_M,
-                        "Error writing mat file header to file p4p2_reference_V7.mat");
-      return;
-    }
-
-    P4p2_DW.ToFile1_IWORK.Count = 0;
-    P4p2_DW.ToFile1_IWORK.Decimation = -1;
-    P4p2_DW.ToFile1_PWORK.FilePtr = fp;
-  }
-
   /* Start for ToFile: '<Root>/To File2' */
   {
-    char fileName[509] = "p4p2_estimate_V7.mat";
+    char fileName[509] = "p4p2_estimate_uV1.mat";
     FILE *fp = (NULL);
     if ((fp = fopen(fileName, "wb")) == (NULL)) {
-      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_estimate_V7.mat");
+      rtmSetErrorStatus(P4p2_M, "Error creating .mat file p4p2_estimate_uV1.mat");
       return;
     }
 
     if (rt_WriteMat4FileHeader(fp,7,0,"estimate")) {
       rtmSetErrorStatus(P4p2_M,
-                        "Error writing mat file header to file p4p2_estimate_V7.mat");
+                        "Error writing mat file header to file p4p2_estimate_uV1.mat");
       return;
     }
 
@@ -1244,6 +1205,12 @@ void P4p2_initialize(void)
     P4p2_DW.ToFile2_IWORK.Decimation = -1;
     P4p2_DW.ToFile2_PWORK.FilePtr = fp;
   }
+
+  /* Start for RateTransition: '<S3>/Rate Transition: x' */
+  P4p2_B.RateTransitionx = P4p2_P.RateTransitionx_X0;
+
+  /* Start for RateTransition: '<S3>/Rate Transition: y' */
+  P4p2_B.RateTransitiony = P4p2_P.RateTransitiony_X0;
 
   /* Start for S-Function (game_controller_block): '<S3>/Game Controller' */
 
@@ -1274,11 +1241,29 @@ void P4p2_initialize(void)
     }
   }
 
+  /* Start for ToFile: '<Root>/To File1' */
+  {
+    char fileName[509] = "p4p2_reference_uV1.mat";
+    FILE *fp = (NULL);
+    if ((fp = fopen(fileName, "wb")) == (NULL)) {
+      rtmSetErrorStatus(P4p2_M,
+                        "Error creating .mat file p4p2_reference_uV1.mat");
+      return;
+    }
+
+    if (rt_WriteMat4FileHeader(fp,3,0,"reference")) {
+      rtmSetErrorStatus(P4p2_M,
+                        "Error writing mat file header to file p4p2_reference_uV1.mat");
+      return;
+    }
+
+    P4p2_DW.ToFile1_IWORK.Count = 0;
+    P4p2_DW.ToFile1_IWORK.Decimation = -1;
+    P4p2_DW.ToFile1_PWORK.FilePtr = fp;
+  }
+
   {
     int32_T i;
-
-    /* InitializeConditions for RateTransition: '<S3>/Rate Transition: x' */
-    P4p2_DW.RateTransitionx_Buffer0 = P4p2_P.RateTransitionx_X0;
 
     /* InitializeConditions for TransferFcn: '<S2>/Travel: Transfer Fcn' */
     P4p2_X.TravelTransferFcn_CSTATE = 0.0;
@@ -1296,14 +1281,11 @@ void P4p2_initialize(void)
 
     /* End of InitializeConditions for Integrator: '<S5>/Integrator' */
 
+    /* InitializeConditions for RateTransition: '<S3>/Rate Transition: x' */
+    P4p2_DW.RateTransitionx_Buffer0 = P4p2_P.RateTransitionx_X0;
+
     /* InitializeConditions for RateTransition: '<S3>/Rate Transition: y' */
     P4p2_DW.RateTransitiony_Buffer0 = P4p2_P.RateTransitiony_X0;
-
-    /* InitializeConditions for Integrator: '<S12>/Integrator' */
-    P4p2_X.Integrator_CSTATE_i = P4p2_P.Integrator_IC_p;
-
-    /* InitializeConditions for Integrator: '<S12>/Integrator1' */
-    P4p2_X.Integrator1_CSTATE = P4p2_P.Integrator1_IC;
   }
 }
 
@@ -1405,24 +1387,24 @@ void P4p2_terminate(void)
   {
     FILE *fp = (FILE *) P4p2_DW.ToFile_PWORK.FilePtr;
     if (fp != (NULL)) {
-      char fileName[509] = "p4p2_states_V7.mat";
+      char fileName[509] = "p4p2_states_uV1.mat";
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_states_V7.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_states_uV1.mat");
         return;
       }
 
       if ((fp = fopen(fileName, "r+b")) == (NULL)) {
-        rtmSetErrorStatus(P4p2_M, "Error reopening MAT-file p4p2_states_V7.mat");
+        rtmSetErrorStatus(P4p2_M, "Error reopening MAT-file p4p2_states_uV1.mat");
         return;
       }
 
       if (rt_WriteMat4FileHeader(fp, 7, P4p2_DW.ToFile_IWORK.Count, "states")) {
         rtmSetErrorStatus(P4p2_M,
-                          "Error writing header for states to MAT-file p4p2_states_V7.mat");
+                          "Error writing header for states to MAT-file p4p2_states_uV1.mat");
       }
 
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_states_V7.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_states_uV1.mat");
         return;
       }
 
@@ -1430,61 +1412,30 @@ void P4p2_terminate(void)
     }
   }
 
-  /* Terminate for ToFile: '<Root>/To File1' */
-  {
-    FILE *fp = (FILE *) P4p2_DW.ToFile1_PWORK.FilePtr;
-    if (fp != (NULL)) {
-      char fileName[509] = "p4p2_reference_V7.mat";
-      if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_reference_V7.mat");
-        return;
-      }
-
-      if ((fp = fopen(fileName, "r+b")) == (NULL)) {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error reopening MAT-file p4p2_reference_V7.mat");
-        return;
-      }
-
-      if (rt_WriteMat4FileHeader(fp, 3, P4p2_DW.ToFile1_IWORK.Count, "reference"))
-      {
-        rtmSetErrorStatus(P4p2_M,
-                          "Error writing header for reference to MAT-file p4p2_reference_V7.mat");
-      }
-
-      if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_reference_V7.mat");
-        return;
-      }
-
-      P4p2_DW.ToFile1_PWORK.FilePtr = (NULL);
-    }
-  }
-
   /* Terminate for ToFile: '<Root>/To File2' */
   {
     FILE *fp = (FILE *) P4p2_DW.ToFile2_PWORK.FilePtr;
     if (fp != (NULL)) {
-      char fileName[509] = "p4p2_estimate_V7.mat";
+      char fileName[509] = "p4p2_estimate_uV1.mat";
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_estimate_V7.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_estimate_uV1.mat");
         return;
       }
 
       if ((fp = fopen(fileName, "r+b")) == (NULL)) {
         rtmSetErrorStatus(P4p2_M,
-                          "Error reopening MAT-file p4p2_estimate_V7.mat");
+                          "Error reopening MAT-file p4p2_estimate_uV1.mat");
         return;
       }
 
       if (rt_WriteMat4FileHeader(fp, 7, P4p2_DW.ToFile2_IWORK.Count, "estimate"))
       {
         rtmSetErrorStatus(P4p2_M,
-                          "Error writing header for estimate to MAT-file p4p2_estimate_V7.mat");
+                          "Error writing header for estimate to MAT-file p4p2_estimate_uV1.mat");
       }
 
       if (fclose(fp) == EOF) {
-        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_estimate_V7.mat");
+        rtmSetErrorStatus(P4p2_M, "Error closing MAT-file p4p2_estimate_uV1.mat");
         return;
       }
 
@@ -1499,6 +1450,39 @@ void P4p2_terminate(void)
     if (P4p2_P.GameController_Enabled) {
       game_controller_close(P4p2_DW.GameController_Controller);
       P4p2_DW.GameController_Controller = NULL;
+    }
+  }
+
+  /* Terminate for ToFile: '<Root>/To File1' */
+  {
+    FILE *fp = (FILE *) P4p2_DW.ToFile1_PWORK.FilePtr;
+    if (fp != (NULL)) {
+      char fileName[509] = "p4p2_reference_uV1.mat";
+      if (fclose(fp) == EOF) {
+        rtmSetErrorStatus(P4p2_M,
+                          "Error closing MAT-file p4p2_reference_uV1.mat");
+        return;
+      }
+
+      if ((fp = fopen(fileName, "r+b")) == (NULL)) {
+        rtmSetErrorStatus(P4p2_M,
+                          "Error reopening MAT-file p4p2_reference_uV1.mat");
+        return;
+      }
+
+      if (rt_WriteMat4FileHeader(fp, 3, P4p2_DW.ToFile1_IWORK.Count, "reference"))
+      {
+        rtmSetErrorStatus(P4p2_M,
+                          "Error writing header for reference to MAT-file p4p2_reference_uV1.mat");
+      }
+
+      if (fclose(fp) == EOF) {
+        rtmSetErrorStatus(P4p2_M,
+                          "Error closing MAT-file p4p2_reference_uV1.mat");
+        return;
+      }
+
+      P4p2_DW.ToFile1_PWORK.FilePtr = (NULL);
     }
   }
 }
@@ -1611,7 +1595,7 @@ RT_MODEL_P4p2_T *P4p2(void)
     /* task periods */
     P4p2_M->Timing.sampleTimes[0] = (0.0);
     P4p2_M->Timing.sampleTimes[1] = (0.002);
-    P4p2_M->Timing.sampleTimes[2] = (0.006);
+    P4p2_M->Timing.sampleTimes[2] = (0.004);
     P4p2_M->Timing.sampleTimes[3] = (0.01);
 
     /* task offsets */
@@ -1634,14 +1618,14 @@ RT_MODEL_P4p2_T *P4p2(void)
   rtmSetTFinal(P4p2_M, -1);
   P4p2_M->Timing.stepSize0 = 0.002;
   P4p2_M->Timing.stepSize1 = 0.002;
-  P4p2_M->Timing.stepSize2 = 0.006;
+  P4p2_M->Timing.stepSize2 = 0.004;
   P4p2_M->Timing.stepSize3 = 0.01;
 
   /* External mode info */
-  P4p2_M->Sizes.checksums[0] = (411616286U);
-  P4p2_M->Sizes.checksums[1] = (2132139421U);
-  P4p2_M->Sizes.checksums[2] = (2370566536U);
-  P4p2_M->Sizes.checksums[3] = (3142795066U);
+  P4p2_M->Sizes.checksums[0] = (3082943201U);
+  P4p2_M->Sizes.checksums[1] = (198675927U);
+  P4p2_M->Sizes.checksums[2] = (730451687U);
+  P4p2_M->Sizes.checksums[3] = (621748634U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
@@ -1687,12 +1671,9 @@ RT_MODEL_P4p2_T *P4p2(void)
     }
 
     for (i = 0; i < 6; i++) {
-      P4p2_B.Sum1_d[i] = 0.0;
+      P4p2_B.Sum1_f[i] = 0.0;
     }
 
-    P4p2_B.RateTransitionx = 0.0;
-    P4p2_B.Joystick_gain_x = 0.0;
-    P4p2_B.Gain1 = 0.0;
     P4p2_B.TravelCounttorad = 0.0;
     P4p2_B.Gain = 0.0;
     P4p2_B.Gain_d = 0.0;
@@ -1703,17 +1684,18 @@ RT_MODEL_P4p2_T *P4p2(void)
     P4p2_B.Gain_e = 0.0;
     P4p2_B.Sum1 = 0.0;
     P4p2_B.Gain_dg = 0.0;
+    P4p2_B.RateTransitionx = 0.0;
+    P4p2_B.Joystick_gain_x = 0.0;
     P4p2_B.RateTransitiony = 0.0;
     P4p2_B.Joystick_gain_y = 0.0;
-    P4p2_B.Gain_bg = 0.0;
-    P4p2_B.RateTransition[0] = 0.0;
-    P4p2_B.RateTransition[1] = 0.0;
+    P4p2_B.P[0] = 0.0;
+    P4p2_B.P[1] = 0.0;
     P4p2_B.FrontmotorSaturation = 0.0;
     P4p2_B.BackmotorSaturation = 0.0;
     P4p2_B.GameController_o4 = 0.0;
     P4p2_B.GameController_o5 = 0.0;
-    P4p2_B.Sum2_l = 0.0;
-    P4p2_B.Sum = 0.0;
+    P4p2_B.RateTransition[0] = 0.0;
+    P4p2_B.RateTransition[1] = 0.0;
   }
 
   /* parameters */
@@ -1811,14 +1793,14 @@ RT_MODEL_P4p2_T *P4p2(void)
   }
 
   /* Initialize Sizes */
-  P4p2_M->Sizes.numContStates = (11);  /* Number of continuous states */
+  P4p2_M->Sizes.numContStates = (9);   /* Number of continuous states */
   P4p2_M->Sizes.numY = (0);            /* Number of model outputs */
   P4p2_M->Sizes.numU = (0);            /* Number of model inputs */
   P4p2_M->Sizes.sysDirFeedThru = (0);  /* The model is not direct feedthrough */
   P4p2_M->Sizes.numSampTimes = (4);    /* Number of sample times */
-  P4p2_M->Sizes.numBlocks = (71);      /* Number of blocks */
-  P4p2_M->Sizes.numBlockIO = (29);     /* Number of block outputs */
-  P4p2_M->Sizes.numBlockPrms = (244);  /* Sum of parameter "widths" */
+  P4p2_M->Sizes.numBlocks = (68);      /* Number of blocks */
+  P4p2_M->Sizes.numBlockIO = (26);     /* Number of block outputs */
+  P4p2_M->Sizes.numBlockPrms = (240);  /* Sum of parameter "widths" */
   return P4p2_M;
 }
 

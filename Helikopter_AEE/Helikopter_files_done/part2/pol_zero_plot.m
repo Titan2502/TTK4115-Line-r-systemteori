@@ -9,7 +9,7 @@ K_pp = 15.564895730560675;
 H1 = tf([K1*K_pp],[1 K1*K_pd K1*K_pp]);
 pzmap(H1)
 hold on
-Krp = -2;
+Krp = -0.5;
 H2 = tf([Krp*K3],[1 Krp*K3]);
 pzmap(H2)
 

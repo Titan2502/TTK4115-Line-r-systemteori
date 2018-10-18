@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.89"
+    ComputedModelVersion    "1.90"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -32,7 +32,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [-8.0, 0.0, 1936.0, 1176.0]
+      Location		      [1912.0, -124.0, 1936.0, 1216.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -56,9 +56,9 @@ Model {
 	IsActive		[1]
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
-	Extents			[1886.0, 1002.0]
+	Extents			[1886.0, 1042.0]
 	ZoomFactor		[1.25]
-	Offset			[-52.582338202991508, -45.593902442598477]
+	Offset			[-52.582338202991536, -45.593902442598562]
       }
     }
   }
@@ -67,11 +67,11 @@ Model {
   Creator		  "Rchan"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "espewaa"
+  LastModifiedBy	  "edvardgh"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Sep 28 15:11:33 2018"
-  RTWModifiedTimeStamp	  460047648
-  ModelVersionFormat	  "1.%<AutoIncrement:89>"
+  LastModifiedDate	  "Thu Oct 18 17:35:53 2018"
+  RTWModifiedTimeStamp	  461784951
+  ModelVersionFormat	  "1.%<AutoIncrement:90>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1156,7 +1156,7 @@ Model {
   }
   System {
     Name		    "P2p1"
-    Location		    [-8, 0, 1928, 1176]
+    Location		    [1912, -124, 3848, 1092]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -3056,8 +3056,8 @@ Model {
       Position		      [1100, 184, 1130, 216]
       ZOrder		      65
       Floating		      off
-      Location		      [1, 48, 1921, 1159]
-      Open		      on
+      Location		      [5, 48, 1925, 1159]
+      Open		      off
       NumInputPorts	      "1"
       List {
 	ListType		AxesTitles
@@ -3110,8 +3110,9 @@ Model {
       Name		      "To File"
       SID		      "299"
       Ports		      [1]
-      Position		      [570, 195, 630, 225]
-      ZOrder		      63
+      Position		      [505, 195, 565, 225]
+      ZOrder		      70
+      Commented		      "on"
       Filename		      "pitch_reference_p2p1.mat"
       MatrixName	      "pitch_ref"
     }
@@ -3120,8 +3121,9 @@ Model {
       Name		      "To File1"
       SID		      "300"
       Ports		      [1]
-      Position		      [1190, 210, 1250, 240]
+      Position		      [1185, 210, 1245, 240]
       ZOrder		      64
+      Commented		      "on"
       Filename		      "state_output_p2p1.mat"
       MatrixName	      "states"
     }
@@ -3331,10 +3333,22 @@ Model {
       DstPort		      1
     }
     Line {
+      ZOrder		      214
+      SrcBlock		      "R2D"
+      SrcPort		      1
+      DstBlock		      "Mux1"
+      DstPort		      1
+    }
+    Line {
       ZOrder		      198
       SrcBlock		      "Joystick"
       SrcPort		      1
       Points		      [23, 0]
+      Branch {
+	ZOrder			234
+	DstBlock		"To File"
+	DstPort			1
+      }
       Branch {
 	ZOrder			204
 	Points			[0, 50]
@@ -3347,18 +3361,6 @@ Model {
 	DstBlock		"R2D"
 	DstPort			1
       }
-      Branch {
-	ZOrder			203
-	DstBlock		"To File"
-	DstPort			1
-      }
-    }
-    Line {
-      ZOrder		      214
-      SrcBlock		      "R2D"
-      SrcPort		      1
-      DstBlock		      "Mux1"
-      DstPort		      1
     }
   }
 }
@@ -3374,7 +3376,7 @@ MatData {
     "      .    N $   8    (     @         %    \"     $    !     0         %  0 $0    $   !5    :7-?=6YI<75E          "
     "!O;&1?8FQO8VL          &]L9%]N86UE            :7-?;6]D96Q?8VQO<VEN9P!I<U]D96QE=&5D              X    P    !@    @ "
     "   ) @        4    (     0    $    !          (  0 !    #@   #@    &    \"     8         !0    @    !     0    $  "
-    "       \"0    @         \"V!D0 X    X    !@    @    $          4    (     0    4    !         !     %    2$E,+3$  "
+    "       \"0    @       \" !H!Y0 X    X    !@    @    $          4    (     0    4    !         !     %    2$E,+3$  "
     "  .    ,     8    (    \"0(        %    \"     $    !     0         \"  $       X    P    !@    @    ) @        4 "
     "   (     0    $    !          (  0      #@   #![   &    \"     (         !0    @    !     0    $         !0 $  \\ "
     "   !    2P   &]L9%]B;V%R9%]T>7!E '$X                 '$R7W5S8@           '$X7W5S8@           '$T                  "
@@ -3756,7 +3758,7 @@ MatData {
     "-T7VYA;64       X    8 0  !@    @    \"          4    (     0    $    !          4 !  -     0   \"<   !O;&1?;F%M90"
     "      :7-?9&5L971E9    &]B:F5C=%]B;&]C:P  #@   #@    &    \"     0         !0    @    !    !0    $         $     4"
     "   !(24PM,0    X    P    !@    @    ) @        4    (     0    $    !          (  0      #@   #@    &    \"     8 "
-    "        !0    @    !     0    $         \"0    @         \"V!D0 "
+    "        !0    @    !     0    $         \"0    @       \" !H!Y0 "
   }
   DataRecord {
     Tag			    DataTag2
@@ -3764,6 +3766,6 @@ MatData {
     "-T7VYA;64       X    8 0  !@    @    \"          4    (     0    $    !          4 !  -     0   \"<   !O;&1?;F%M90"
     "      :7-?9&5L971E9    &]B:F5C=%]B;&]C:P  #@   #@    &    \"     0         !0    @    !    !0    $         $     4"
     "   !(24PM,0    X    P    !@    @    ) @        4    (     0    $    !          (  0      #@   #@    &    \"     8 "
-    "        !0    @    !     0    $         \"0    @         \"V!D0 "
+    "        !0    @    !     0    $         \"0    @       \" !H!Y0 "
   }
 }

@@ -13,7 +13,7 @@
 
 %%%%%%%%%%% Calibration of the encoder and the hardware for the specific
 %%%%%%%%%%% helicopter
-Joystick_gain_x = 1;
+Joystick_gain_x = 1.5;
 Joystick_gain_y = -8;
 
 
@@ -53,27 +53,30 @@ omega_n = -(log(0.02*sqrt(1-zeta^2)))/(zeta*T_s);
 K_pp = omega_n^2/K1; 
 K_pd = (2*zeta*omega_n)/K1;
 
+% Transfer function of Pitch controller
+sys_pitch = tf([K_pp*K1],[1 K_pd*K1 K_pp*K1]);
+pole_pitch = pole(sys_pitch);
 % Travel Rate Controller
-K_rp = -1;
+K_rp = -0.5;
 
 
-%% Plotting
-a = load('travelRate_reference_p2p2_krp_2_gain0_4.mat');
-b = load('state_output_p2p2_krp_2_gain0_4.mat');
-figure(1)
-plot(a.travelRate_ref(1,:), a.travelRate_ref(2, :)*180/pi, 'r')
-hold on
-plot(b.states(1,:), b.states(3,:)*180/pi,'b')
-grid on
-hold off
-title('\textbf{$\dot{\tilde{\lambda}}$ versus $\dot{\tilde{\lambda}}_c$ with P controller for travel rate}', 'interpreter', 'latex')
-ylabel('TravelRate [deg]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-legend({'$\dot{\tilde{\lambda}}_c$','$\dot{\tilde{\lambda}}$'}, 'interpreter', 'latex')
-
-% PITCH PLOT
-figure(2)
-plot(b.states(1,:), b.states(4,:)*180/pi,'b'), grid on
-title('\textbf{Pitch in degrees}', 'interpreter', 'latex')
-ylabel('Pitch [deg]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
+% %% Plotting
+% a = load('p2p2_travelRate_reference.mat');
+% b = load('p2p2_state_output.mat');
+% figure(1)
+% plot(a.travelRate_ref(1,:), a.travelRate_ref(2, :)*180/pi, 'r')
+% hold on
+% plot(b.states(1,:), b.states(3,:)*180/pi,'b')
+% grid on
+% hold off
+% title('\textbf{$\dot{\tilde{\lambda}}$ versus $\dot{\tilde{\lambda}}_c$ with P controller for travel rate}', 'interpreter', 'latex')
+% ylabel('TravelRate [deg/S]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% legend({'$\dot{\tilde{\lambda}}_c$','$\dot{\tilde{\lambda}}$'}, 'interpreter', 'latex')
+% 
+% % PITCH PLOT
+% figure(2)
+% plot(b.states(1,:), b.states(4,:)*180/pi,'b'), grid on
+% title('\textbf{Pitch in degrees}', 'interpreter', 'latex')
+% ylabel('Pitch [deg]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')

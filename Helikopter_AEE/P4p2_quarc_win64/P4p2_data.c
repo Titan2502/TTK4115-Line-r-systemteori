@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p2".
  *
- * Model version              : 1.138
+ * Model version              : 1.104
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Sat Oct 13 09:47:12 2018
+ * C source code generated on : Wed Oct 17 19:13:57 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -48,20 +48,22 @@ P_P4p2_T P4p2_P = {
   /*  Variable: K
    * Referenced by: '<S4>/K'
    */
-  { -7.7624729540147107E-16, 30.655474469003295, -5.419780522893297E-16,
-    14.325354296529298, 25.031255487374363, -5.6132137671447074E-15,
-    -5.5523931377685011E-16, 25.819888974716076, 19.999999999999989,
-    1.4751981232343995E-15 },
+  { 0.0, 9.9999999999999947, 0.0, 5.9432329879135457, 22.360679774997894, 0.0 },
 
   /*  Variable: L
    * Referenced by: '<S5>/Gain3'
    */
-  { 107.78934316453702, 3120.5587304882629, -11.500555270369368,
-    -701.75723288644747, 12.076013491621136, 653.31053149302716,
-    6.7432775091842316, 369.3831535933308, 110.29429646670637, 3134.310736527159,
-    10.793979115872768, 627.43400371449457, -7.4263681641588946,
-    -455.68297453216007, -8.904892345228923, -499.49931120751768,
-    109.53569107966756, 3083.0194688191291 },
+  { 4242.5585633214268, 4.9276439290180085E+6, 453.17684971608321,
+    1.1086337826722073E+6, 1258.5659649651468, 3.2807076508569592E+6,
+    -469.37688697877667, -1.1991724622185885E+6, 4364.0975238346437,
+    5.676574404010186E+6, -197.78024473603367, -577018.31305767351,
+    -997.80286728702, -2.4832464527691156E+6, -15.51771495333378,
+    -196088.61394901131, 4283.1606395672325, 5.1129588326984392E+6 },
+
+  /*  Variable: P
+   * Referenced by: '<S4>/P'
+   */
+  { 0.0, 9.9999999999999947, 22.360679774997898, -0.0 },
   10.0,                                /* Mask Parameter: HILInitialize_analog_input_maxi
                                         * Referenced by: '<Root>/HIL Initialize'
                                         */
@@ -280,21 +282,6 @@ P_P4p2_T P4p2_P = {
   0,                                   /* Mask Parameter: HILInitialize_set_pwm_params__f
                                         * Referenced by: '<Root>/HIL Initialize'
                                         */
-  0.0,                                 /* Expression: 0
-                                        * Referenced by: '<S3>/Rate Transition: x'
-                                        */
-  -0.1,                                /* Expression: -0.1
-                                        * Referenced by: '<S3>/Dead Zone: x'
-                                        */
-  0.1,                                 /* Expression: 0.1
-                                        * Referenced by: '<S3>/Dead Zone: x'
-                                        */
-  1.1111111111111112,                  /* Expression: 10/9
-                                        * Referenced by: '<S3>/Gain: x'
-                                        */
-  1.0,                                 /* Expression: 1
-                                        * Referenced by: '<Root>/Gain1'
-                                        */
   0.00076699039394282058,              /* Expression: 2*pi/8192
                                         * Referenced by: '<S2>/Travel: Count to rad'
                                         */
@@ -358,6 +345,21 @@ P_P4p2_T P4p2_P = {
   0.0,                                 /* Expression: 0
                                         * Referenced by: '<S5>/Integrator'
                                         */
+  57.295779513082323,                  /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D 1'
+                                        */
+  0.0,                                 /* Expression: 0
+                                        * Referenced by: '<S3>/Rate Transition: x'
+                                        */
+  -0.1,                                /* Expression: -0.1
+                                        * Referenced by: '<S3>/Dead Zone: x'
+                                        */
+  0.1,                                 /* Expression: 0.1
+                                        * Referenced by: '<S3>/Dead Zone: x'
+                                        */
+  1.1111111111111112,                  /* Expression: 10/9
+                                        * Referenced by: '<S3>/Gain: x'
+                                        */
   0.0,                                 /* Expression: 0
                                         * Referenced by: '<S3>/Rate Transition: y'
                                         */
@@ -369,21 +371,6 @@ P_P4p2_T P4p2_P = {
                                         */
   1.1111111111111112,                  /* Expression: 10/9
                                         * Referenced by: '<S3>/Gain: y'
-                                        */
-  1.0,                                 /* Expression: 1
-                                        * Referenced by: '<Root>/Gain'
-                                        */
-  57.295779513082323,                  /* Expression: 180/pi
-                                        * Referenced by: '<Root>/R2D '
-                                        */
-  57.295779513082323,                  /* Expression: 180/pi
-                                        * Referenced by: '<Root>/R2D 1'
-                                        */
-  0.0,                                 /* Expression: 0
-                                        * Referenced by: '<S12>/Integrator'
-                                        */
-  0.0,                                 /* Expression: 0
-                                        * Referenced by: '<S12>/Integrator1'
                                         */
   0.5,                                 /* Expression: 0.5
                                         * Referenced by: '<S1>/Back gain'
@@ -402,6 +389,9 @@ P_P4p2_T P4p2_P = {
                                         */
   -5.0,                                /* Expression: -5
                                         * Referenced by: '<S2>/Back motor: Saturation'
+                                        */
+  57.295779513082323,                  /* Expression: 180/pi
+                                        * Referenced by: '<Root>/R2D '
                                         */
   12U,                                 /* Computed Parameter: GameController_BufferSize
                                         * Referenced by: '<S3>/Game Controller'

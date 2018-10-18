@@ -14,7 +14,7 @@
 %%%%%%%%%%% Calibration of the encoder and the hardware for the specific
 %%%%%%%%%%% helicopter
 Joystick_gain_x = 1;
-Joystick_gain_y = -0.5;
+Joystick_gain_y = 1;
 
 
 %%%%%%%%%%% Physical constants
@@ -84,68 +84,66 @@ q4 = 200;
 q5 = 200;
 Q = diag([q1 q2 q3 q4 q5]);
 
-r1 = 0.3;
+r1 = 0.5;
 r2 = 1;
 R = diag([r1 r2]);
 
 % LQR: u = -K*x and P matrix --> u = Pr - K*x
 K = lqr(A,B,Q,R);
 
-%% Plotting
-a = load('p3p3_states_Q4Q5_200.mat');
-b = load('p3p3_reference_Q4Q5_200.mat');
-c = load('p3p3_reference_int_Q4Q5_200.mat');
-
-figure(3)
-subplot(2, 4, 1);
-plot(a.states(1,:), a.states(2,:),'b'), grid on
-ylabel('Travel $\lambda$ [deg]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-
-subplot(2, 4, 5);
-plot(a.states(1,:), a.states(3,:),'b'), grid on
-ylabel('TravelRate $\dot{\lambda}$ [deg/s]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-
-subplot(2, 4, 2);
-plot(a.states(1,:), a.states(4,:),'b'), grid on
-hold on
-plot(b.reference(1,:), b.reference(2,:), 'r')
-hold off
-ylabel('Pitch $p$ [deg]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-legend({'$\tilde{p}$','$\tilde{p}_c$'}, 'interpreter', 'latex')
-title({'States in blue, reference in red'}, 'interpreter', 'latex')
-
-subplot(2, 4, 6);
-plot(a.states(1,:), a.states(5,:),'b'), grid on
-ylabel('PitchRate $\dot{p}$ [deg/s]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-
-subplot(2, 4, 3);
-plot(a.states(1,:), a.states(6,:),'b'), grid on
-ylabel('Elevation $e$ [deg]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-
-
-subplot(2, 4, 7);
-plot(a.states(1,:), a.states(7,:),'b'), grid on
-hold on
-plot(b.reference(1,:), b.reference(3,:), 'r')
-hold off
-ylabel('Elevation $\dot{e}$ [deg/s]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-legend({'$\tilde{\dot{e}}$','$\tilde{\dot{e}}_c$'}, 'interpreter', 'latex')
-
-
-
-
-subplot(2, 4, 4);
-plot(c.reference_int(1,:), c.reference_int(2,:),'b'), grid on
-ylabel('Error p [deg]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-
-subplot(2, 4, 8);
-plot(c.reference_int(1,:), c.reference_int(3,:),'b'), grid on
-ylabel('Error $\dot{e}$ [deg/s]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
+% %% Plotting
+% a = load('p3p3_states_Q4Q5_200.mat');
+% b = load('p3p3_reference_Q4Q5_200.mat');
+% c = load('p3p3_reference_int_Q4Q5_200.mat');
+% 
+% figure(3)
+% subplot(2, 4, 1);
+% plot(a.states(1,:), a.states(2,:),'b'), grid on
+% ylabel('Travel $\lambda$ [deg]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% 
+% subplot(2, 4, 5);
+% plot(a.states(1,:), a.states(3,:),'b'), grid on
+% ylabel('TravelRate $\dot{\lambda}$ [deg/s]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% 
+% subplot(2, 4, 2);
+% plot(a.states(1,:), a.states(4,:),'b'), grid on
+% hold on
+% plot(b.reference(1,:), b.reference(2,:), 'r')
+% hold off
+% ylabel('Pitch $p$ [deg]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% legend({'$\tilde{p}$','$\tilde{p}_c$'}, 'interpreter', 'latex')
+% title({'States in blue, reference in red'}, 'interpreter', 'latex')
+% 
+% subplot(2, 4, 6);
+% plot(a.states(1,:), a.states(5,:),'b'), grid on
+% ylabel('PitchRate $\dot{p}$ [deg/s]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% 
+% subplot(2, 4, 3);
+% plot(a.states(1,:), a.states(6,:),'b'), grid on
+% ylabel('Elevation $e$ [deg]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% 
+% 
+% subplot(2, 4, 7);
+% plot(a.states(1,:), a.states(7,:),'b'), grid on
+% hold on
+% plot(b.reference(1,:), b.reference(3,:), 'r')
+% hold off
+% ylabel('Elevation $\dot{e}$ [deg/s]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% legend({'$\tilde{\dot{e}}$','$\tilde{\dot{e}}_c$'}, 'interpreter', 'latex')
+% 
+% 
+% subplot(2, 4, 4);
+% plot(c.reference_int(1,:), c.reference_int(2,:),'b'), grid on
+% ylabel('Error p [deg]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% 
+% subplot(2, 4, 8);
+% plot(c.reference_int(1,:), c.reference_int(3,:),'b'), grid on
+% ylabel('Error $\dot{e}$ [deg/s]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')

@@ -3,9 +3,9 @@
  *
  * Code generation for model "P4p2".
  *
- * Model version              : 1.138
+ * Model version              : 1.104
  * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013
- * C source code generated on : Sat Oct 13 09:47:12 2018
+ * C source code generated on : Wed Oct 17 19:13:57 2018
  *
  * Target selection: quarc_win64.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -60,7 +60,7 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&P4p2_B.RateTransitionx), 0, 0, 60 }
+  { (char_T *)(&P4p2_B.TravelCounttorad), 0, 0, 58 }
   ,
 
   { (char_T *)(&P4p2_DW.HILInitialize_AIMinimums[0]), 0, 0, 68 },
@@ -71,7 +71,7 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&P4p2_DW.HILReadEncoderTimebase_Task), 16, 0, 1 },
 
-  { (char_T *)(&P4p2_DW.Scope_PWORK.LoggedData), 11, 0, 16 },
+  { (char_T *)(&P4p2_DW.Scope1_PWORK.LoggedData), 11, 0, 15 },
 
   { (char_T *)(&P4p2_DW.HILInitialize_ClockModes[0]), 6, 0, 46 },
 
@@ -96,7 +96,7 @@ static DataTypeTransition rtPTransitions[] = {
 
   { (char_T *)(&P4p2_P.HILInitialize_active), 8, 0, 35 },
 
-  { (char_T *)(&P4p2_P.RateTransitionx_X0), 0, 0, 41 },
+  { (char_T *)(&P4p2_P.TravelCounttorad_Gain), 0, 0, 37 },
 
   { (char_T *)(&P4p2_P.GameController_BufferSize), 5, 0, 1 },
 

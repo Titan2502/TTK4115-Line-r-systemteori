@@ -48,16 +48,16 @@ K1 = L1/J_p;
 K2 = L3/J_e;
 K3 = -(L4*L2)/(J_lambda*L3);
 
-%% Print Vs
-a = load('P1p4.mat');
-b = load('P1p4_Vs.mat');
-figure(1)
-plot(a.simout(1,:), a.simout(6, :), 'r')
-hold on
-plot(b.simout_Vs(1,:), b.simout_Vs(2,:),'b')
-grid on
-title('Elevation plotted against Vs Offset')
-xlabel('$t [s]$', 'interpreter', 'latex')
-ylabel('Elevation [deg] / Vs offset [rad]')
-legend('Elevation','Vs Offset')
-hold off
+% %% Print Vs
+% a = load('P1p4.mat');
+% b = load('P1p4_Vs.mat');
+% figure(1)
+% plot(a.simout(1,:), a.simout(6, :), 'r')
+% hold on
+% plot(b.simout_Vs(1,:), b.simout_Vs(2,:),'b')
+% grid on
+% title('Elevation plotted against Vs Offset')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% ylabel('Elevation [deg] / Vs offset [rad]')
+% legend('Elevation','Vs Offset')
+% hold off

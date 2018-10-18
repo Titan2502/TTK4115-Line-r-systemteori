@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.94"
+    ComputedModelVersion    "1.99"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -32,7 +32,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [-8.0, -8.0, 1936.0, 1176.0]
+      Location		      [1912.0, -124.0, 1936.0, 1216.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -56,9 +56,9 @@ Model {
 	IsActive		[1]
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
-	Extents			[1886.0, 1002.0]
+	Extents			[1886.0, 1042.0]
 	ZoomFactor		[1.25]
-	Offset			[-150.2574606591819, -28.907132605463971]
+	Offset			[-248.72888923061055, -94.4714183197498]
       }
     }
   }
@@ -67,11 +67,11 @@ Model {
   Creator		  "Rchan"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "espewaa"
+  LastModifiedBy	  "edvardgh"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Oct 12 10:21:29 2018"
-  RTWModifiedTimeStamp	  461240488
-  ModelVersionFormat	  "1.%<AutoIncrement:94>"
+  LastModifiedDate	  "Thu Oct 18 18:38:35 2018"
+  RTWModifiedTimeStamp	  461788711
+  ModelVersionFormat	  "1.%<AutoIncrement:99>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1156,7 +1156,7 @@ Model {
   }
   System {
     Name		    "P2p2"
-    Location		    [-8, -8, 1928, 1168]
+    Location		    [1912, -124, 3848, 1092]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1170,7 +1170,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "306"
+    SIDHighWatermark	    "307"
     Block {
       BlockType		      SubSystem
       Name		      "Conversion"
@@ -1619,16 +1619,6 @@ Model {
 	  DstPort		  2
 	}
       }
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "Gain"
-      SID		      "303"
-      Position		      [115, 117, 150, 153]
-      ZOrder		      75
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      Reference
@@ -2454,7 +2444,7 @@ Model {
       Name		      "Joystick"
       SID		      "208"
       Ports		      [0, 2]
-      Position		      [20, 111, 70, 209]
+      Position		      [80, 106, 130, 204]
       ZOrder		      26
       BackgroundColor	      "gray"
       RequestExecContextInheritance off
@@ -2896,7 +2886,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Pitch controller"
-	Location		[-8, 0, 1928, 1176]
+	Location		[1912, -124, 3848, 1092]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -3062,7 +3052,7 @@ Model {
       BlockType		      Gain
       Name		      "R2D1"
       SID		      "306"
-      Position		      [330, 72, 390, 108]
+      Position		      [330, 87, 390, 123]
       ZOrder		      78
       Gain		      "180/pi"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
@@ -3077,7 +3067,7 @@ Model {
       Position		      [1015, 139, 1045, 171]
       ZOrder		      71
       Floating		      off
-      Location		      [1921, 48, 3841, 1199]
+      Location		      [5, 43, 1925, 1194]
       Open		      on
       NumInputPorts	      "1"
       List {
@@ -3095,15 +3085,15 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      off
-      YMin		      "-60"
-      YMax		      "60"
+      YMin		      "-90"
+      YMax		      "10"
     }
     Block {
       BlockType		      Scope
       Name		      "Scope1"
       SID		      "305"
       Ports		      [1]
-      Position		      [470, 74, 500, 106]
+      Position		      [470, 89, 500, 121]
       ZOrder		      77
       Floating		      off
       Location		      [5, 43, 1925, 1194]
@@ -3124,8 +3114,8 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      off
-      YMin		      "-60"
-      YMax		      "60"
+      YMin		      "-150"
+      YMax		      "150"
       SaveName		      "ScopeData1"
     }
     Block {
@@ -3163,7 +3153,8 @@ Model {
       Ports		      [1]
       Position		      [485, 150, 545, 180]
       ZOrder		      70
-      Filename		      "travelRate_reference_p2p2_krp_1_5.mat"
+      Commented		      "on"
+      Filename		      "p2p2_travelRate_reference.mat"
       MatrixName	      "travelRate_ref"
     }
     Block {
@@ -3173,7 +3164,8 @@ Model {
       Ports		      [1]
       Position		      [1155, 205, 1215, 235]
       ZOrder		      74
-      Filename		      "state_output_p2p2_krp_1_5.mat"
+      Commented		      "on"
+      Filename		      "p2p2_state_output.mat"
       MatrixName	      "states"
     }
     Block {
@@ -3187,7 +3179,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Travel controller"
-	Location		[-8, -8, 1928, 1168]
+	Location		[1912, -124, 3848, 1092]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -3471,7 +3463,7 @@ Model {
       Points		      [16, 0]
       Branch {
 	ZOrder			235
-	Points			[0, -130]
+	Points			[0, -115]
 	DstBlock		"R2D1"
 	DstPort			1
       }
@@ -3514,13 +3506,6 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      196
-      SrcBlock		      "Joystick"
-      SrcPort		      1
-      DstBlock		      "Gain"
-      DstPort		      1
-    }
-    Line {
       ZOrder		      202
       SrcBlock		      "R2D"
       SrcPort		      1
@@ -3528,10 +3513,17 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      212
-      SrcBlock		      "Gain"
+      ZOrder		      236
+      SrcBlock		      "R2D1"
       SrcPort		      1
-      Points		      [3, 0; 0, 30]
+      DstBlock		      "Scope1"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      252
+      SrcBlock		      "Joystick"
+      SrcPort		      1
+      Points		      [23, 0; 0, 35]
       Branch {
 	ZOrder			204
 	Points			[189, 0]
@@ -3554,13 +3546,6 @@ Model {
 	DstPort			1
       }
     }
-    Line {
-      ZOrder		      236
-      SrcBlock		      "R2D1"
-      SrcPort		      1
-      DstBlock		      "Scope1"
-      DstPort		      1
-    }
   }
 }
 MatData {
@@ -3575,7 +3560,7 @@ MatData {
     "      .    N $   8    (     @         %    \"     $    !     0         %  0 $0    $   !5    :7-?=6YI<75E          "
     "!O;&1?8FQO8VL          &]L9%]N86UE            :7-?;6]D96Q?8VQO<VEN9P!I<U]D96QE=&5D              X    P    !@    @ "
     "   ) @        4    (     0    $    !          (  0 !    #@   #@    &    \"     8         !0    @    !     0    $  "
-    "       \"0    @         !(!X0 X    X    !@    @    $          4    (     0    4    !         !     %    2$E,+3$   "
+    "       \"0    @         !I!Y0 X    X    !@    @    $          4    (     0    4    !         !     %    2$E,+3$   "
     " .    ,     8    (    \"0(        %    \"     $    !     0         \"  $       X    P    !@    @    ) @        4  "
     "  (     0    $    !          (  0      #@   #![   &    \"     (         !0    @    !     0    $         !0 $  \\  "
     "  !    2P   &]L9%]B;V%R9%]T>7!E '$X                 '$R7W5S8@           '$X7W5S8@           '$T                   "
@@ -3957,7 +3942,7 @@ MatData {
     "-T7VYA;64       X    8 0  !@    @    \"          4    (     0    $    !          4 !  -     0   \"<   !O;&1?;F%M90"
     "      :7-?9&5L971E9    &]B:F5C=%]B;&]C:P  #@   #@    &    \"     0         !0    @    !    !0    $         $     4"
     "   !(24PM,0    X    P    !@    @    ) @        4    (     0    $    !          (  0      #@   #@    &    \"     8 "
-    "        !0    @    !     0    $         \"0    @         !(!X0 "
+    "        !0    @    !     0    $         \"0    @         !I!Y0 "
   }
   DataRecord {
     Tag			    DataTag2
@@ -3965,6 +3950,6 @@ MatData {
     "-T7VYA;64       X    8 0  !@    @    \"          4    (     0    $    !          4 !  -     0   \"<   !O;&1?;F%M90"
     "      :7-?9&5L971E9    &]B:F5C=%]B;&]C:P  #@   #@    &    \"     0         !0    @    !    !0    $         $     4"
     "   !(24PM,0    X    P    !@    @    ) @        4    (     0    $    !          (  0      #@   #@    &    \"     8 "
-    "        !0    @    !     0    $         \"0    @         !(!X0 "
+    "        !0    @    !     0    $         \"0    @         !I!Y0 "
   }
 }

@@ -13,7 +13,7 @@
 
 %%%%%%%%%%% Calibration of the encoder and the hardware for the specific
 %%%%%%%%%%% helicopter
-Joystick_gain_x = 1;
+Joystick_gain_x = 0.8;
 Joystick_gain_y = -8;
 
 
@@ -53,16 +53,16 @@ omega_n = -(log(0.02*sqrt(1-zeta^2)))/(zeta*T_s);
 K_pp = omega_n^2/K1; 
 K_pd = (2*zeta*omega_n)/K1;
 
-%% Plotting
-a = load('pitch_reference_p2p1.mat');
-b = load('state_output_p2p1.mat');
-figure(1)
-plot(a.pitch_ref(1,:), a.pitch_ref(2, :)*180/pi, 'r')
-hold on
-plot(b.states(1,:), b.states(4,:)*180/pi,'b')
-grid on
-hold off
-title('\textbf{$\tilde{p}$ versus $\tilde{p}_c$ with PD controller for pitch}', 'interpreter', 'latex')
-ylabel('Pitch [deg]', 'interpreter', 'latex')
-xlabel('$t [s]$', 'interpreter', 'latex')
-legend({'$\tilde{p}_c$','$\tilde{p}$'}, 'interpreter', 'latex')
+% %% Plotting
+% a = load('pitch_reference_p2p1.mat');
+% b = load('state_output_p2p1.mat');
+% figure(1)
+% plot(a.pitch_ref(1,:), a.pitch_ref(2, :)*180/pi, 'r')
+% hold on
+% plot(b.states(1,:), b.states(4,:)*180/pi,'b')
+% grid on
+% hold off
+% title('\textbf{$\tilde{p}$ versus $\tilde{p}_c$ with PD controller for pitch}', 'interpreter', 'latex')
+% ylabel('Pitch [deg]', 'interpreter', 'latex')
+% xlabel('$t [s]$', 'interpreter', 'latex')
+% legend({'$\tilde{p}_c$','$\tilde{p}$'}, 'interpreter', 'latex')
